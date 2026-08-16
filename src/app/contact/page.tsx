@@ -65,12 +65,20 @@ export default function Contact() {
 
           </div>
 
-          {/* Global Fallback */}
-          <div className="text-center">
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium text-blue-100 shadow-lg">
-              <Mail className="w-4 h-4 text-blue-300" />
-              General Inbox: <span className="text-white font-bold">hello@taxcliniccorner.com</span>
-            </div>
+          {/* Global Fallback - FIXED FOR MOBILE */}
+          <div className="flex justify-center w-full">
+            <a 
+              href="mailto:hello@taxcliniccorner.com"
+              className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 px-6 sm:px-8 py-5 sm:py-4 rounded-3xl sm:rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300 w-full max-w-[90%] sm:max-w-fit"
+            >
+              <div className="flex items-center gap-2 text-sm font-medium text-blue-200">
+                <Mail className="w-4 h-4" />
+                <span>General Inbox:</span>
+              </div>
+              <span className="text-white font-extrabold break-word max-w-full text-center text-[15px] sm:text-base">
+                hello@taxcliniccorner.com
+              </span>
+            </a>
           </div>
 
         </div>
