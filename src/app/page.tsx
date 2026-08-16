@@ -51,7 +51,7 @@ export default function Home() {
       </div>
 
       {/* 2. HERO SECTION WITH CINEMATIC ENTRANCE */}
-      <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center relative z-10 pt-20 pb-12">
+      <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center relative z-10 pt-10 pb-12">
         
         {/* Brand Tag with Shimmer Highlight */}
         <span className="text-blue-300 font-bold tracking-[0.2em] uppercase text-sm mb-6 animate-fade-in-up shimmer-brand">
