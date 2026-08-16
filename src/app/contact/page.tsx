@@ -69,9 +69,9 @@ export default function Contact() {
           <div className="flex justify-center w-full">
             <a 
               href="mailto:hello@taxcliniccorner.com"
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 px-6 sm:px-8 py-5 sm:py-4 rounded-3xl sm:rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300 w-full max-w-[90%] sm:max-w-fit"
+              className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 px-6 sm:px-8 py-5 sm:py-4 rounded-3xl sm:rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-lg transition-all duration-300 transform hover:scale-105 active:scale-95 hover:bg-linear-to-r hover:from-blue-800 hover:to-blue-900 hover:border-blue-700 w-full max-w-[90%] sm:max-w-fit group"
             >
-              <div className="flex items-center gap-2 text-sm font-medium text-blue-200">
+              <div className="flex items-center gap-2 text-sm font-medium text-blue-200 group-hover:text-blue-100 transition-colors">
                 <Mail className="w-4 h-4" />
                 <span>General Inbox:</span>
               </div>

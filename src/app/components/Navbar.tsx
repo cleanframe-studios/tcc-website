@@ -62,7 +62,7 @@ export default function Navbar() {
         >
           <Link 
             href="/about" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 ${
+            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
               !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
             }`}
           >
@@ -70,7 +70,7 @@ export default function Navbar() {
           </Link>
           <Link 
             href="/services" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 ${
+            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
               !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
             }`}
           >
@@ -78,7 +78,7 @@ export default function Navbar() {
           </Link>
           <Link 
             href="/contact" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 ${
+            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
               !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
             }`}
           >

@@ -1,7 +1,28 @@
+"use client";
+
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import HeroCursor from '@/app/components/HeroCursor';
 
 export default function Home() {
+  // State to manage which background is showing
+  const [bgState, setBgState] = useState<'video' | 'image'>('video');
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Timer to switch back to video after the image shows for 10 seconds
+  useEffect(() => {
+    if (bgState === 'image') {
+      const timer = setTimeout(() => {
+        setBgState('video');
+        if (videoRef.current) {
+          videoRef.current.currentTime = 0; // Reset video to start
+          videoRef.current.play(); // Play the video again
+        }
+      }, 10000); // 10 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [bgState]);
+
   const flyers = [
     "/TIH0.png", "/TIH1.png", "/TIH2.png", "/TIH3.png", 
     "/TIH4.png", "/TIH5.png", "/TIH6.png", "/TIH7.png", 
@@ -35,14 +56,23 @@ export default function Home() {
       {/* MACBOOK MAGIC CURSOR (Hero Section Only) */}
       <HeroCursor />
 
-      {/* 1. FIXED PARALLAX VIDEO BACKGROUND */}
+      {/* 1. FIXED PARALLAX CROSS-FADING BACKGROUND */}
       <div className="fixed top-0 left-0 w-full h-screen -z-10 bg-blue-950">
+        {/* The Image (nrs.jpg) */}
+        <img 
+          src="/nrs.jpg" 
+          alt="Tax Clinic Background" 
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${bgState === 'image' ? 'opacity-60' : 'opacity-0'}`}
+        />
+        
+        {/* The Video (Notice we removed 'loop' and added 'onEnded') */}
         <video
+          ref={videoRef}
           autoPlay
-          loop
           muted
           playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
+          onEnded={() => setBgState('image')} // Triggers the switch to image when video finishes
+          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${bgState === 'video' ? 'opacity-60' : 'opacity-0'}`}
         >
           <source src="/tcc-bg.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -51,24 +81,16 @@ export default function Home() {
       </div>
 
       {/* 2. HERO SECTION WITH CINEMATIC ENTRANCE */}
-      <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center relative z-10 pt-10 pb-12">
-        
-        {/* Brand Tag with Shimmer Highlight */}
+      <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center relative z-10 pt-7 pb-12">
         <span className="text-blue-300 font-bold tracking-[0.2em] uppercase text-sm mb-6 animate-fade-in-up shimmer-brand">
           Tax Clinic Corner
         </span>
-
-        {/* Main Header */}
         <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8 drop-shadow-2xl animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">
           Master Tax Compliance <br/> with Clarity.
         </h1>
-
-        {/* Subtitle */}
         <p className="text-lg md:text-xl text-blue-50 max-w-2xl leading-relaxed mb-12 drop-shadow-md animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">
           Professional tax education and regulatory guidance designed for the modern business landscape.
         </p>
-
-        {/* Action Buttons */}
         <div className="flex gap-6 flex-col sm:flex-row animate-fade-in-up opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '0.6s' }}>
           <a 
             href="https://forms.gle/gVJT1HFsKJQW8dtc6"
@@ -90,7 +112,6 @@ export default function Home() {
       {/* 3. UNIFIED SCROLLING CONTENT */}
       <div className="relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.25)]">
         
-        {/* SECTION 1: Textured Canvas */}
         <section className="py-24 px-6 tcc-canvas border-b border-slate-200/60">
           <div className="max-w-4xl mx-auto scroll-fade">
             <div className="p-10 md:p-14 bg-white/80 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-xl text-center">
@@ -107,7 +128,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 2: Rich Blue Gradient */}
         <section className="py-20 overflow-hidden bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white border-b border-blue-900/50">
           <div className="text-center mb-12 px-6 scroll-fade">
             <h2 className="text-2xl font-bold text-white">TCC Insight Hour</h2>
@@ -125,7 +145,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 3: Textured Canvas */}
         <section className="py-20 overflow-hidden tcc-canvas border-b border-slate-200/60">
           <div className="text-center mb-16 px-6 scroll-fade">
             <h2 className="text-2xl font-bold text-slate-900">Our Distinguished Speakers</h2>
@@ -154,7 +173,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SECTION 4: Rich Blue Gradient */}
         <section className="py-24 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white text-center">
           <div className="max-w-4xl mx-auto scroll-fade">
             <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center mx-auto mb-6 shadow-lg">
