@@ -4,21 +4,79 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import HeroCursor from '@/app/components/HeroCursor';
 
+// --- CUSTOM ANIMATED COUNTER COMPONENT ---
+function AnimatedCounter({ end, suffix = "", duration = 2000, label }: { end: number, suffix?: string, duration?: number, label: string }) {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Check when the element scrolls into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.5 } // Triggers when 50% visible
+    );
+    
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    
+    return () => observer.disconnect();
+  }, []);
+
+  // Handle the fast count-up animation
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    let startTimestamp: number | null = null;
+    
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      
+      // Easing function so it slows down slightly right before finishing
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      
+      setCount(Math.floor(easeProgress * end));
+      
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    
+    window.requestAnimationFrame(step);
+  }, [isVisible, end, duration]);
+
+  return (
+    <div ref={ref} className="flex flex-col items-center">
+      <div className="text-5xl md:text-6xl font-extrabold text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)] mb-2">
+        {count.toLocaleString()}{suffix}
+      </div>
+      <div className="text-xs sm:text-sm font-bold text-blue-100 uppercase tracking-widest text-center">
+        {label}
+      </div>
+    </div>
+  );
+}
+// -----------------------------------------
+
 export default function Home() {
-  // State to manage which background is showing
   const [bgState, setBgState] = useState<'video' | 'image'>('video');
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Timer to switch back to video after the image shows for 10 seconds
   useEffect(() => {
     if (bgState === 'image') {
       const timer = setTimeout(() => {
         setBgState('video');
         if (videoRef.current) {
-          videoRef.current.currentTime = 0; // Reset video to start
-          videoRef.current.play(); // Play the video again
+          videoRef.current.currentTime = 0;
+          videoRef.current.play();
         }
-      }, 10000); // 10 seconds
+      }, 10000);
       return () => clearTimeout(timer);
     }
   }, [bgState]);
@@ -53,25 +111,21 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-transparent">
       
-      {/* MACBOOK MAGIC CURSOR (Hero Section Only) */}
       <HeroCursor />
 
-      {/* 1. FIXED PARALLAX CROSS-FADING BACKGROUND */}
+      {/* FIXED PARALLAX CROSS-FADING BACKGROUND */}
       <div className="fixed top-0 left-0 w-full h-screen -z-10 bg-blue-950">
-        {/* The Image (nrs.jpg) */}
         <img 
           src="/nrs.jpg" 
           alt="Tax Clinic Background" 
           className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${bgState === 'image' ? 'opacity-60' : 'opacity-0'}`}
         />
-        
-        {/* The Video (Notice we removed 'loop' and added 'onEnded') */}
         <video
           ref={videoRef}
           autoPlay
           muted
           playsInline
-          onEnded={() => setBgState('image')} // Triggers the switch to image when video finishes
+          onEnded={() => setBgState('image')}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${bgState === 'video' ? 'opacity-60' : 'opacity-0'}`}
         >
           <source src="/tcc-bg.mp4" type="video/mp4" />
@@ -80,7 +134,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-slate-900/70"></div>
       </div>
 
-      {/* 2. HERO SECTION WITH CINEMATIC ENTRANCE */}
+      {/* HERO SECTION */}
       <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center relative z-10 pt-7 pb-12">
         <span className="text-blue-300 font-bold tracking-[0.2em] uppercase text-sm mb-6 animate-fade-in-up shimmer-brand">
           Tax Clinic Corner
@@ -109,7 +163,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 3. UNIFIED SCROLLING CONTENT */}
+      {/* SCROLLING CONTENT */}
       <div className="relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.25)]">
         
         <section className="py-24 px-6 tcc-canvas border-b border-slate-200/60">
@@ -133,7 +187,6 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-white">TCC Insight Hour</h2>
             <p className="text-blue-200 mt-2">Explore our past educational sessions</p>
           </div>
-          
           <div className="overflow-hidden w-full scroll-fade">
             <div className="animate-marquee">
               {[...flyers, ...flyers].map((item, index) => (
@@ -150,7 +203,6 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-slate-900">Our Distinguished Speakers</h2>
             <p className="text-slate-500 mt-2">Industry leaders who have shared their expertise at TCC</p>
           </div>
-          
           <div className="overflow-hidden w-full scroll-fade">
             <div className="animate-marquee-reverse items-start">
               {[...speakers, ...speakers].map((speaker, index) => (
@@ -173,6 +225,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ELITE NETWORK SECTION */}
         <section className="py-24 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white text-center">
           <div className="max-w-4xl mx-auto scroll-fade">
             <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -181,14 +234,21 @@ export default function Home() {
             <h2 className="text-3xl font-extrabold text-white mb-4">
               The Elite Network
             </h2>
-            <p className="text-blue-100 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+            <p className="text-blue-100 text-lg leading-relaxed mb-12 max-w-2xl mx-auto">
               Join our exclusive WhatsApp community. It is the premier space to ask complex tax questions, network with industry professionals, and stay instantly updated on regulatory shifts.
             </p>
+
+            {/* DYNAMIC METRIC COUNTERS */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-12 sm:gap-32 mb-14">
+              <AnimatedCounter end={15} suffix="+" label="High-Level Professionals" duration={2000} />
+              <AnimatedCounter end={1000} suffix="+" label="Active Members" duration={2500} />
+            </div>
+
             <a 
               href="https://forms.gle/gVJT1HFsKJQW8dtc6"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-white text-blue-900 font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 hover:bg-blue-50 shadow-xl btn-shine"
+              className="inline-block px-10 py-5 bg-white text-blue-900 font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 hover:bg-blue-50 shadow-xl btn-shine"
             >
               Apply to Join the Community
             </a>
