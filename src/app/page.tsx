@@ -50,37 +50,37 @@ export default function Home() {
         <div className="absolute inset-0 bg-slate-900/70"></div>
       </div>
 
-      {/* 2. HERO SECTION WITH REDUCED TOP SPACING */}
-      <div className="flex flex-col items-center justify-start min-h-[90vh] pt-7 pb-16 px-6 text-center relative z-10">
+      {/* 2. HERO SECTION WITH CINEMATIC ENTRANCE */}
+      <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center relative z-10 pt-20 pb-12">
         
         {/* Brand Tag with Shimmer Highlight */}
-        <span className="text-blue-300 font-bold tracking-[0.2em] uppercase text-xs mb-4 animate-fade-in-up shimmer-brand">
+        <span className="text-blue-300 font-bold tracking-[0.2em] uppercase text-sm mb-6 animate-fade-in-up shimmer-brand">
           Tax Clinic Corner
         </span>
 
         {/* Main Header */}
-        <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6 drop-shadow-2xl animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">
+        <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8 drop-shadow-2xl animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">
           Master Tax Compliance <br/> with Clarity.
         </h1>
 
         {/* Subtitle */}
-        <p className="text-base md:text-lg text-blue-50 max-w-xl leading-relaxed mb-8 drop-shadow-md animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">
+        <p className="text-lg md:text-xl text-blue-50 max-w-2xl leading-relaxed mb-12 drop-shadow-md animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">
           Professional tax education and regulatory guidance designed for the modern business landscape.
         </p>
 
         {/* Action Buttons */}
-        <div className="flex gap-4 flex-col sm:flex-row animate-fade-in-up opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '0.6s' }}>
+        <div className="flex gap-6 flex-col sm:flex-row animate-fade-in-up opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '0.6s' }}>
           <a 
             href="https://forms.gle/gVJT1HFsKJQW8dtc6"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-white text-blue-900 text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 hover:bg-linear-to-r hover:from-blue-800 hover:to-blue-900 hover:text-white text-center shadow-xl btn-shine"
+            className="px-10 py-4 bg-white text-blue-900 text-base font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 hover:bg-linear-to-r hover:from-blue-800 hover:to-blue-900 hover:text-white text-center shadow-xl btn-shine"
           >
             Join the Clinic
           </a>
           <Link 
             href="/about"
-            className="px-8 py-4 bg-transparent border-2 border-white text-white text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 hover:bg-white/15 hover:border-blue-200 text-center btn-shine"
+            className="px-10 py-4 bg-transparent border-2 border-white text-white text-base font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 hover:bg-white/15 hover:border-blue-200 text-center btn-shine"
           >
             Learn More
           </Link>
