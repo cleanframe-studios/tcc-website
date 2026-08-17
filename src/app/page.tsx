@@ -65,30 +65,30 @@ export default function Home() {
   }, [bgState]);
 
   const flyers = [
-    "/TIH0.png", "/TIH1.png", "/TIH2.png", "/TIH3.png", 
-    "/TIH4.png", "/TIH5.png", "/TIH6.png", "/TIH7.png", 
-    "/TIH8.png", "/TIH9.png", "/TIH10.png", "/TIH11.png"
+    "/flyers/TIH0.png", "/flyers/TIH1.png", "/flyers/TIH2.png", "/flyers/TIH3.png", 
+    "/flyers/TIH4.png", "/flyers/TIH5.png", "/flyers/TIH6.png", "/flyers/TIH7.png", 
+    "/flyers/TIH8.png", "/flyers/TIH9.png", "/flyers/TIH10.png", "/flyers/TIH11.png"
   ]; 
   
   const speakers = [
-    { name: "Toluwalogo Odutayo", title: "Partner", role: "Deloitte", image: "/1.png" },
-    { name: "Dr. Tolu Adegbie", title: "Former Exec. Chairman", role: "ODIRS", image: "/2.png" },
-    { name: "Mallam Haruna Yahaya", title: "61st President", role: "ICAN", image: "/3.png" },
-    { name: "Mr. Segun Tijani", title: "Head, HNWI Unit", role: "LIRS", image: "/4.png" },
-    { name: "Dr. Oluwashola Ganiyu", title: "Managing Partner", role: "KJB Professional Services", image: "/5.png" },
-    { name: "Amb. O. Ogunsanya", title: "Tax Official", role: "Ekiti State IRS", image: "/6.png" },
-    { name: "Mr. Olumide E. Bewaji", title: "Tax Professional", role: "AIS Professional Services", image: "/7.png" },
-    { name: "Prof. A. Adedokun", title: "Professor of Accounting", role: "Yavapai College, USA", image: "/8.png" },
-    { name: "Mr. Samuel Agbeluyi", title: "16th President", role: "CITN", image: "/9.png" },
-    { name: "Prof. Ishola Akintoye", title: "Prof. of Accounting", role: "Strategic Financial Mgt.", image: "/10.png" },
-    { name: "Prof. Godwin Oyedokun", title: "Professor of Accounting", role: "Lead City University", image: "/11.png" },
-    { name: "Dr. Zaid Abubakar", title: "Executive Chairman", role: "Kano State IRS", image: "/12.png" },
-    { name: "Dr. Razak Jaiyeola", title: "54th President", role: "ICAN", image: "/13.png" },
-    { name: "Mr. Olufemi Olarinde", title: "Head of Fiscal Reforms", role: "NRS", image: "/14.png" },
-    { name: "Dr. John C. Nwabueze", title: "Chief Executive", role: "Nigeria Tax Ombud", image: "/15.png" },
-    { name: "Dr. Mark Abani", title: "Coordinating Dean", role: "CITN", image: "/16.png" },
-    { name: "Mr. Nosa Uwaifo", title: "Subject Matter Expert", role: "NRS", image: "/17.png" },
-    { name: "Dr. Oladeji Akinyele", title: "CEO", role: "CSDC Consulting Nigeria", image: "/18.png" }
+    { name: "Toluwalogo Odutayo", title: "Partner", role: "Deloitte", image: "/speakers/1.png" },
+    { name: "Dr. Tolu Adegbie", title: "Former Exec. Chairman", role: "ODIRS", image: "/speakers/2.png" },
+    { name: "Mallam Haruna Yahaya", title: "61st President", role: "ICAN", image: "/speakers/3.png" },
+    { name: "Mr. Segun Tijani", title: "Head, HNWI Unit", role: "LIRS", image: "/speakers/4.png" },
+    { name: "Dr. Oluwashola Ganiyu", title: "Managing Partner", role: "KJB Professional Services", image: "/speakers/5.png" },
+    { name: "Amb. O. Ogunsanya", title: "Tax Official", role: "Ekiti State IRS", image: "/speakers/6.png" },
+    { name: "Mr. Olumide E. Bewaji", title: "Tax Professional", role: "AIS Professional Services", image: "/speakers/7.png" },
+    { name: "Prof. A. Adedokun", title: "Professor of Accounting", role: "Yavapai College, USA", image: "/speakers/8.png" },
+    { name: "Mr. Samuel Agbeluyi", title: "16th President", role: "CITN", image: "/speakers/9.png" },
+    { name: "Prof. Ishola Akintoye", title: "Prof. of Accounting", role: "Strategic Financial Mgt.", image: "/speakers/10.png" },
+    { name: "Prof. Godwin Oyedokun", title: "Professor of Accounting", role: "Lead City University", image: "/speakers/11.png" },
+    { name: "Dr. Zaid Abubakar", title: "Executive Chairman", role: "Kano State IRS", image: "/speakers/12.png" },
+    { name: "Dr. Razak Jaiyeola", title: "54th President", role: "ICAN", image: "/speakers/13.png" },
+    { name: "Mr. Olufemi Olarinde", title: "Head of Fiscal Reforms", role: "NRS", image: "/speakers/14.png" },
+    { name: "Dr. John C. Nwabueze", title: "Chief Executive", role: "Nigeria Tax Ombud", image: "/speakers/15.png" },
+    { name: "Dr. Mark Abani", title: "Coordinating Dean", role: "CITN", image: "/speakers/16.png" },
+    { name: "Mr. Nosa Uwaifo", title: "Subject Matter Expert", role: "NRS", image: "/speakers/17.png" },
+    { name: "Dr. Oladeji Akinyele", title: "CEO", role: "CSDC Consulting Nigeria", image: "/speakers/18.png" }
   ];
 
   const filteredSpeakers = speakers.filter(speaker =>
