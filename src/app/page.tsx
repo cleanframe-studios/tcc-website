@@ -3,51 +3,34 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import HeroCursor from '@/app/components/HeroCursor';
+import { Search } from 'lucide-react';
 
-// --- CUSTOM ANIMATED COUNTER COMPONENT ---
 function AnimatedCounter({ end, suffix = "", duration = 2000, label }: { end: number, suffix?: string, duration?: number, label: string }) {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Check when the element scrolls into view
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.5 } // Triggers when 50% visible
+      { threshold: 0.5 }
     );
-    
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-    
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
-  // Handle the fast count-up animation
   useEffect(() => {
     if (!isVisible) return;
-    
     let startTimestamp: number | null = null;
-    
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      
-      // Easing function so it slows down slightly right before finishing
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      
       setCount(Math.floor(easeProgress * end));
-      
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
+      if (progress < 1) window.requestAnimationFrame(step);
     };
-    
     window.requestAnimationFrame(step);
   }, [isVisible, end, duration]);
 
@@ -62,10 +45,10 @@ function AnimatedCounter({ end, suffix = "", duration = 2000, label }: { end: nu
     </div>
   );
 }
-// -----------------------------------------
 
 export default function Home() {
   const [bgState, setBgState] = useState<'video' | 'image'>('video');
+  const [searchQuery, setSearchQuery] = useState('');
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -107,6 +90,12 @@ export default function Home() {
     { name: "Mr. Nosa Uwaifo", title: "Subject Matter Expert", role: "NRS", image: "/17.png" },
     { name: "Dr. Oladeji Akinyele", title: "CEO", role: "CSDC Consulting Nigeria", image: "/18.png" }
   ];
+
+  const filteredSpeakers = speakers.filter(speaker =>
+    speaker.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    speaker.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    speaker.role.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <main className="relative min-h-screen bg-transparent">
@@ -198,30 +187,64 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-20 overflow-hidden tcc-canvas border-b border-slate-200/60">
-          <div className="text-center mb-16 px-6 scroll-fade">
-            <h2 className="text-2xl font-bold text-slate-900">Our Distinguished Speakers</h2>
-            <p className="text-slate-500 mt-2">Industry leaders who have shared their expertise at TCC</p>
-          </div>
-          <div className="overflow-hidden w-full scroll-fade">
-            <div className="animate-marquee-reverse items-start">
-              {[...speakers, ...speakers].map((speaker, index) => (
-                <div key={`${speaker.name}-${index}`} className="w-64 shrink-0 mx-6 flex flex-col items-center">
-                  <div className="w-48 h-48 bg-white rounded-full border-4 border-slate-200/60 flex items-center justify-center overflow-hidden shadow-md mb-6 relative">
-                    <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 text-center leading-none mt-4">
-                    {speaker.name}
-                  </h3>
-                  <p className="text-sm font-bold text-blue-700 text-center leading-tight mt-1.5">
-                    {speaker.title}
-                  </p>
-                  <p className="text-xs font-medium text-slate-500 text-center leading-tight mt-0.5">
-                    {speaker.role}
-                  </p>
-                </div>
-              ))}
+        {/* DISTINGUISHED SPEAKERS SECTION - NON-LOOPING GALLERY WITH SEARCH */}
+        <section className="py-20 tcc-canvas border-b border-slate-200/60">
+          <div className="max-w-6xl mx-auto px-6 mb-12 flex flex-col md:flex-row items-center justify-between gap-6 scroll-fade">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">Our Distinguished Speakers</h2>
+              <p className="text-slate-500 mt-1">Industry leaders who have shared their expertise at TCC</p>
             </div>
+            
+            {/* Search Filter Bar */}
+            <div className="relative w-full md:w-80">
+              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <Search className="w-4 h-4" />
+              </span>
+              <input 
+                type="text"
+                placeholder="Search speakers or roles..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-full text-sm text-slate-800 placeholder-slate-400 shadow-sm focus:outline-none focus:border-blue-700 transition-colors"
+              />
+            </div>
+          </div>
+          
+          {/* Non-Looping Horizontal Scroll Gallery with Fused Rectangular Cards */}
+          <div className="max-w-6xl mx-auto px-6">
+            {filteredSpeakers.length === 0 ? (
+              <div className="text-center py-16 text-slate-500 font-medium">
+                No speakers found matching &quot;{searchQuery}&quot;.
+              </div>
+            ) : (
+              <div className="flex gap-6 overflow-x-auto pb-6 pt-2 scroll-smooth scrollbar-thin">
+                {filteredSpeakers.map((speaker, index) => (
+                  <div 
+                    key={`${speaker.name}-${index}`} 
+                    className="w-72 shrink-0 bg-white rounded-2xl border border-slate-200/80 shadow-md overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                  >
+                    {/* Rectangular Image Box */}
+                    <div className="w-full h-72 bg-slate-100 overflow-hidden relative">
+                      <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
+                    </div>
+                    {/* Fused Name & Title Box */}
+                    <div className="p-5 bg-white flex flex-col justify-between flex-grow text-center">
+                      <h3 className="text-base font-extrabold text-slate-900 leading-snug">
+                        {speaker.name}
+                      </h3>
+                      <div className="mt-2">
+                        <p className="text-xs font-bold text-blue-700 uppercase tracking-wider">
+                          {speaker.title}
+                        </p>
+                        <p className="text-xs font-medium text-slate-500 mt-0.5">
+                          {speaker.role}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -238,7 +261,6 @@ export default function Home() {
               Join our exclusive WhatsApp community. It is the premier space to ask complex tax questions, network with industry professionals, and stay instantly updated on regulatory shifts.
             </p>
 
-            {/* DYNAMIC METRIC COUNTERS */}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-12 sm:gap-32 mb-14">
               <AnimatedCounter end={15} suffix="+" label="High-Level Professionals" duration={2000} />
               <AnimatedCounter end={1000} suffix="+" label="Active Members" duration={2500} />

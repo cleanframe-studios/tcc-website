@@ -25,7 +25,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when changing pages
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
@@ -77,6 +76,14 @@ export default function Navbar() {
             Services
           </Link>
           <Link 
+            href="/resources" 
+            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
+              !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
+            }`}
+          >
+            Resources
+          </Link>
+          <Link 
             href="/contact" 
             className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
               !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
@@ -102,22 +109,16 @@ export default function Navbar() {
       {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl py-6 px-6 flex flex-col gap-4 text-center animate-fade-in-up">
-          <Link 
-            href="/about" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 transition-colors"
-          >
+          <Link href="/about" className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 transition-colors">
             About
           </Link>
-          <Link 
-            href="/services" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 transition-colors"
-          >
+          <Link href="/services" className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 transition-colors">
             Services
           </Link>
-          <Link 
-            href="/contact" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 transition-colors"
-          >
+          <Link href="/resources" className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 transition-colors">
+            Resources
+          </Link>
+          <Link href="/contact" className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 transition-colors">
             Contact
           </Link>
         </div>
