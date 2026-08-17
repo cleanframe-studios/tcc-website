@@ -71,13 +71,13 @@ export default function Resources() {
       <section className="tcc-canvas pt-32 pb-16 px-6 border-b border-slate-200/65">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-blue-700 font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-in-up">
-            Official Repository & Portals
+            Official Repository
           </span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6 animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">
-            Tax Laws & State Revenue <br/> Directories.
+            Statutes, Circulars & State <br/> Revenue Directories.
           </h1>
           <p className="text-slate-600 max-w-xl mx-auto text-base leading-relaxed animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">
-            Download verified statutory acts and access official portals for all state internal revenue services across Nigeria.
+            Access verified statutory acts, federal government guidelines, and official portals for all state internal revenue services across Nigeria.
           </p>
         </div>
       </section>
@@ -86,7 +86,7 @@ export default function Resources() {
       <section className="py-20 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white border-b border-blue-900/40">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-extrabold mb-8 text-white flex items-center gap-3">
-            <FileText className="w-6 h-6 text-amber-400" /> Statutory Tax Acts
+            <FileText className="w-6 h-6 text-amber-400" /> Statutes & Federal Guidelines
           </h2>
 
           <div className="relative mb-8">
