@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // <--- Add this import here
 import HeroCursor from '@/app/components/HeroCursor';
 import { Search } from 'lucide-react';
 
@@ -102,24 +103,32 @@ export default function Home() {
       
       <HeroCursor />
 
-      {/* FIXED PARALLAX CROSS-FADING BACKGROUND */}
+      {/* 1. FIXED PARALLAX CROSS-FADING BACKGROUND */}
       <div className="fixed top-0 left-0 w-full h-screen -z-10 bg-blue-950">
-        <img 
+        
+        {/* The Optimized Next.js Image */}
+        <Image 
           src="/nrs.jpg" 
           alt="Tax Clinic Background" 
-          className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${bgState === 'image' ? 'opacity-60' : 'opacity-0'}`}
+          fill
+          priority
+          className={`absolute top-0 left-0 object-cover transition-opacity duration-1000 ease-in-out ${bgState === 'image' ? 'opacity-60' : 'opacity-0'}`}
         />
+        
+        {/* The Optimized Video with preload="metadata" */}
         <video
           ref={videoRef}
           autoPlay
           muted
           playsInline
+          preload="metadata"
           onEnded={() => setBgState('image')}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${bgState === 'video' ? 'opacity-60' : 'opacity-0'}`}
         >
           <source src="/tcc-bg.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+        
         <div className="absolute inset-0 bg-slate-900/70"></div>
       </div>
 
