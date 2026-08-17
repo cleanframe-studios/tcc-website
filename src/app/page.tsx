@@ -228,7 +228,7 @@ export default function Home() {
                       <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
                     </div>
                     {/* Fused Name & Title Box */}
-                    <div className="p-5 bg-white flex flex-col justify-between flex-grow text-center">
+                    <div className="p-5 bg-white flex flex-col justify-between grow text-center">
                       <h3 className="text-base font-extrabold text-slate-900 leading-snug">
                         {speaker.name}
                       </h3>
