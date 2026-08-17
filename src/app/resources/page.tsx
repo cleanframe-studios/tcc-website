@@ -71,10 +71,10 @@ export default function Resources() {
       <section className="tcc-canvas pt-32 pb-16 px-6 border-b border-slate-200/65">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-blue-700 font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-in-up">
-            Official Repository & Portals
+            Official Repository &amp; Portals
           </span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6 animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">
-            Statutes, Circulars & State <br/> Revenue Directories.
+            Statutes, Circulars &amp; State <br/> Revenue Directories.
           </h1>
           <p className="text-slate-600 max-w-xl mx-auto text-base leading-relaxed animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">
             Download verified statutory acts, federal government guidelines, and access official portals for all state internal revenue services across Nigeria.
@@ -86,7 +86,7 @@ export default function Resources() {
       <section className="py-20 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white border-b border-blue-900/40">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-extrabold mb-8 text-white flex items-center gap-3">
-            <FileText className="w-6 h-6 text-amber-400" /> Statutes & Federal Guidelines
+            <FileText className="w-6 h-6 text-amber-400" /> Statutes &amp; Federal Guidelines
           </h2>
 
           <div className="relative mb-8">
@@ -102,52 +102,63 @@ export default function Resources() {
             />
           </div>
 
-          <div className="flex flex-col gap-4">
-            {filteredDocs.length === 0 ? (
-              <div className="text-center py-12 text-blue-200 font-medium bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
-                No documents found matching &quot;{docSearch}&quot;.
-              </div>
-            ) : (
-              filteredDocs.map((doc) => (
-                <div 
-                  key={doc.id}
-                  className="group flex items-center justify-between p-5 md:p-6 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30"
-                >
-                  <div className="flex items-center gap-4 pr-4">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0 text-white">
-                      <FileText className="w-5 h-5 md:w-6 md:h-6" />
-                    </div>
-                    <div>
-                      <span className="inline-block text-amber-300 font-bold text-xs tracking-wider mb-1">
-                        {doc.code}
-                      </span>
-                      <h3 className="text-base md:text-lg font-extrabold text-white group-hover:text-amber-200 transition-colors">
-                        {doc.name}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <a 
-                    href={doc.file}
-                    download
-                    className="inline-flex items-center gap-2 px-5 py-3 bg-white text-blue-900 text-xs md:text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md shrink-0 btn-shine"
-                  >
-                    <Download className="w-4 h-4" /> 
-                    <span className="hidden sm:inline">Download</span>
-                  </a>
+          {/* FIXED-HEIGHT SCROLLABLE CONTAINER FOR DOCUMENTS */}
+          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 
+            [&::-webkit-scrollbar]:w-2 
+            [&::-webkit-scrollbar-track]:bg-white/5 
+            [&::-webkit-scrollbar-track]:rounded-full 
+            [&::-webkit-scrollbar-thumb]:bg-white/20 
+            [&::-webkit-scrollbar-thumb]:rounded-full 
+            hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60
+            transition-colors duration-300"
+          >
+            <div className="flex flex-col gap-4">
+              {filteredDocs.length === 0 ? (
+                <div className="text-center py-12 text-blue-200 font-medium bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
+                  No documents found matching &quot;{docSearch}&quot;.
                 </div>
-              ))
-            )}
+              ) : (
+                filteredDocs.map((doc) => (
+                  <div 
+                    key={doc.id}
+                    className="group flex items-center justify-between p-5 md:p-6 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30"
+                  >
+                    <div className="flex items-center gap-4 pr-4">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0 text-white">
+                        <FileText className="w-5 h-5 md:w-6 md:h-6" />
+                      </div>
+                      <div>
+                        <span className="inline-block text-amber-300 font-bold text-xs tracking-wider mb-1">
+                          {doc.code}
+                        </span>
+                        <h3 className="text-base md:text-lg font-extrabold text-white group-hover:text-amber-200 transition-colors">
+                          {doc.name}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <a 
+                      href={doc.file}
+                      download
+                      className="inline-flex items-center gap-2 px-5 py-3 bg-white text-blue-900 text-xs md:text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md shrink-0 btn-shine"
+                    >
+                      <Download className="w-4 h-4" /> 
+                      <span className="hidden sm:inline">Download</span>
+                    </a>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: STATE IRS DIRECTORY (WITH FIXED HEIGHT AND CUSTOM SCROLLBAR) */}
+      {/* SECTION 2: STATE IRS DIRECTORY */}
       <section className="py-20 px-6 bg-slate-900 text-white">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
             <h2 className="text-2xl font-extrabold text-white flex items-center gap-3">
-              <Building2 className="w-6 h-6 text-amber-400" /> State Internal Revenue Services (SIRS) & FCT
+              <Building2 className="w-6 h-6 text-amber-400" /> State Internal Revenue Services (SIRS) &amp; FCT
             </h2>
             
             <div className="relative w-full md:w-72 shrink-0">
@@ -164,7 +175,7 @@ export default function Resources() {
             </div>
           </div>
 
-          {/* FIXED-HEIGHT SCROLLABLE CONTAINER */}
+          {/* FIXED-HEIGHT SCROLLABLE CONTAINER FOR STATES */}
           <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 
             [&::-webkit-scrollbar]:w-2 
             [&::-webkit-scrollbar-track]:bg-white/5 
