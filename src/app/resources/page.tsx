@@ -1,32 +1,32 @@
-import { Download, FileText, BookOpen } from 'lucide-react';
+import { Download, FileText } from 'lucide-react';
 
 export default function Resources() {
   const documents = [
     {
       id: 'ntaa',
       code: 'NTAA',
-      name: 'Nigerian Tax Administration Act',
+      name: 'Nigerian Tax Administration Act 2025',
       description: 'Comprehensive statutory guidelines for tax administration, assessment procedures, and compliance across jurisdictions.',
       file: '/documents/NTAA.pdf'
     },
     {
       id: 'nta',
       code: 'NTA',
-      name: 'National Tax Act',
+      name: 'Nigeria Tax Act 2025',
       description: 'The foundational fiscal framework governing national tax obligations, duties, and statutory exemptions.',
       file: '/documents/NTA.pdf'
     },
     {
-      id: 'jtb',
-      code: 'JTB',
-      name: 'Joint Tax Board Guidelines',
+      id: 'jrb',
+      code: 'JRB',
+      name: 'Joint Revenue Board Establishment Act 2025',
       description: 'Unified operational standards, inter-state harmonization directives, and administrative protocols.',
       file: '/documents/JTB.pdf'
     },
     {
       id: 'nrs',
       code: 'NRS',
-      name: 'National Revenue Service Framework',
+      name: 'Nigeria Revenue Service Establishment Act 2025',
       description: 'Official revenue mobilization policies, tax collection directives, and institutional modernization guidelines.',
       file: '/documents/NRS.pdf'
     }
