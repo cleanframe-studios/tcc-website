@@ -71,13 +71,13 @@ export default function Resources() {
       <section className="tcc-canvas pt-32 pb-16 px-6 border-b border-slate-200/65">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-blue-700 font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-in-up">
-            Official Repository
+            Official Repository & Portals
           </span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6 animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">
             Statutes, Circulars & State <br/> Revenue Directories.
           </h1>
           <p className="text-slate-600 max-w-xl mx-auto text-base leading-relaxed animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">
-            Access verified statutory acts, federal government guidelines, and official portals for all state internal revenue services across Nigeria.
+            Download verified statutory acts, federal government guidelines, and access official portals for all state internal revenue services across Nigeria.
           </p>
         </div>
       </section>
@@ -95,7 +95,7 @@ export default function Resources() {
             </span>
             <input 
               type="text"
-              placeholder="Search tax acts..."
+              placeholder="Search documents or circulars..."
               value={docSearch}
               onChange={(e) => setDocSearch(e.target.value)}
               className="w-full pl-12 pr-6 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white placeholder-blue-200 shadow-xl focus:outline-none focus:border-amber-400 transition-colors"
@@ -103,40 +103,46 @@ export default function Resources() {
           </div>
 
           <div className="flex flex-col gap-4">
-            {filteredDocs.map((doc) => (
-              <div 
-                key={doc.id}
-                className="group flex items-center justify-between p-5 md:p-6 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30"
-              >
-                <div className="flex items-center gap-4 pr-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0 text-white">
-                    <FileText className="w-5 h-5 md:w-6 md:h-6" />
-                  </div>
-                  <div>
-                    <span className="inline-block text-amber-300 font-bold text-xs tracking-wider mb-1">
-                      {doc.code}
-                    </span>
-                    <h3 className="text-base md:text-lg font-extrabold text-white group-hover:text-amber-200 transition-colors">
-                      {doc.name}
-                    </h3>
-                  </div>
-                </div>
-
-                <a 
-                  href={doc.file}
-                  download
-                  className="inline-flex items-center gap-2 px-5 py-3 bg-white text-blue-900 text-xs md:text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md shrink-0 btn-shine"
-                >
-                  <Download className="w-4 h-4" /> 
-                  <span className="hidden sm:inline">Download</span>
-                </a>
+            {filteredDocs.length === 0 ? (
+              <div className="text-center py-12 text-blue-200 font-medium bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
+                No documents found matching &quot;{docSearch}&quot;.
               </div>
-            ))}
+            ) : (
+              filteredDocs.map((doc) => (
+                <div 
+                  key={doc.id}
+                  className="group flex items-center justify-between p-5 md:p-6 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30"
+                >
+                  <div className="flex items-center gap-4 pr-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0 text-white">
+                      <FileText className="w-5 h-5 md:w-6 md:h-6" />
+                    </div>
+                    <div>
+                      <span className="inline-block text-amber-300 font-bold text-xs tracking-wider mb-1">
+                        {doc.code}
+                      </span>
+                      <h3 className="text-base md:text-lg font-extrabold text-white group-hover:text-amber-200 transition-colors">
+                        {doc.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <a 
+                    href={doc.file}
+                    download
+                    className="inline-flex items-center gap-2 px-5 py-3 bg-white text-blue-900 text-xs md:text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md shrink-0 btn-shine"
+                  >
+                    <Download className="w-4 h-4" /> 
+                    <span className="hidden sm:inline">Download</span>
+                  </a>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: STATE IRS DIRECTORY */}
+      {/* SECTION 2: STATE IRS DIRECTORY (WITH FIXED HEIGHT AND CUSTOM SCROLLBAR) */}
       <section className="py-20 px-6 bg-slate-900 text-white">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
@@ -144,7 +150,7 @@ export default function Resources() {
               <Building2 className="w-6 h-6 text-amber-400" /> State Internal Revenue Services (SIRS) & FCT
             </h2>
             
-            <div className="relative w-full md:w-72">
+            <div className="relative w-full md:w-72 shrink-0">
               <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                 <Search className="w-4 h-4" />
               </span>
@@ -158,27 +164,45 @@ export default function Resources() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredStates.map((item, index) => (
-              <a 
-                key={index}
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/15 hover:border-amber-400/50 transition-all duration-300"
-              >
-                <div>
-                  <span className="text-xs font-bold text-amber-400 tracking-wider uppercase">
-                    {item.state}
-                  </span>
-                  <h4 className="text-sm font-bold text-white group-hover:text-blue-200 transition-colors">
-                    {item.name}
-                  </h4>
+          {/* FIXED-HEIGHT SCROLLABLE CONTAINER */}
+          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 
+            [&::-webkit-scrollbar]:w-2 
+            [&::-webkit-scrollbar-track]:bg-white/5 
+            [&::-webkit-scrollbar-track]:rounded-full 
+            [&::-webkit-scrollbar-thumb]:bg-white/20 
+            [&::-webkit-scrollbar-thumb]:rounded-full 
+            hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60
+            transition-colors duration-300"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {filteredStates.length === 0 ? (
+                <div className="col-span-1 md:col-span-2 text-center py-12 text-slate-400 font-medium bg-white/5 rounded-xl border border-white/10">
+                  No state portal found matching &quot;{stateSearch}&quot;.
                 </div>
-                <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors shrink-0 ml-2" />
-              </a>
-            ))}
+              ) : (
+                filteredStates.map((item, index) => (
+                  <a 
+                    key={index}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/15 hover:border-amber-400/50 transition-all duration-300 h-fit"
+                  >
+                    <div>
+                      <span className="text-xs font-bold text-amber-400 tracking-wider uppercase">
+                        {item.state}
+                      </span>
+                      <h4 className="text-sm font-bold text-white group-hover:text-blue-200 transition-colors">
+                        {item.name}
+                      </h4>
+                    </div>
+                    <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors shrink-0 ml-2" />
+                  </a>
+                ))
+              )}
+            </div>
           </div>
+
         </div>
       </section>
 
