@@ -31,6 +31,22 @@ export default function Navbar() {
 
   const isTransparent = pathname === '/' && !isScrolled;
 
+  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      window.location.reload();
+    }
+  };
+
+  const navItems = [
+    { name: 'Home', href: '/', onClick: handleHomeClick },
+    { name: 'About', href: '/about' },
+    { name: 'Services', href: '/services' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'Calculator', href: '/calculator' },
+    { name: 'Contact', href: '/contact' },
+  ];
+
   return (
     <nav 
       className={`fixed top-0 w-full z-50 transition-all duration-300 animate-slide-down ${
@@ -54,61 +70,30 @@ export default function Navbar() {
         </Link>
 
         {/* ==========================================
-            DESKTOP NAVIGATION LINKS
+            DESKTOP NAVIGATION LINKS (Smooth Animated Pills)
             ========================================== */}
-        <div 
-          className={`hidden md:flex gap-8 text-sm font-bold transition-colors duration-300 ${
-            !isTransparent ? "text-slate-600" : "text-white/90 drop-shadow-sm"
-          }`}
-        >
-          <Link 
-            href="/" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-              !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
-            }`}
-          >
-            Home
-          </Link>
-          <Link 
-            href="/about" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-              !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
-            }`}
-          >
-            About
-          </Link>
-          <Link 
-            href="/services" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-              !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
-            }`}
-          >
-            Services
-          </Link>
-          <Link 
-            href="/resources" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-              !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
-            }`}
-          >
-            Resources
-          </Link>
-          <Link 
-            href="/calculator" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-              !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
-            }`}
-          >
-            Calculator
-          </Link>
-          <Link 
-            href="/contact" 
-            className={`inline-block transition-all duration-300 transform hover:scale-105 active:scale-95 ${
-              !isTransparent ? "hover:text-blue-900" : "hover:text-amber-200 hover:drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]"
-            }`}
-          >
-            Contact
-          </Link>
+        <div className="hidden md:flex items-center gap-2 text-sm font-bold">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link 
+                key={item.name}
+                href={item.href}
+                onClick={item.onClick}
+                className={`px-4 py-2 rounded-full transition-all duration-300 transform active:scale-95 ${
+                  isActive 
+                    ? (!isTransparent 
+                        ? "bg-blue-900 text-white shadow-md scale-105 font-extrabold" 
+                        : "bg-amber-400 text-slate-900 shadow-lg scale-105 font-extrabold drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]")
+                    : (!isTransparent 
+                        ? "text-slate-600 hover:text-blue-900 hover:bg-slate-100/60 font-medium" 
+                        : "text-white/90 hover:text-amber-200 hover:bg-white/10 font-medium")
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -125,46 +110,28 @@ export default function Navbar() {
       </div>
 
       {/* ==========================================
-          MOBILE DROPDOWN NAVIGATION LINKS
+          MOBILE DROPDOWN NAVIGATION LINKS (Distinct Active Cards)
           ========================================== */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl py-6 px-6 flex flex-col gap-4 text-center animate-fade-in-up">
-          <Link 
-            href="/" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 active:scale-95 transition-colors"
-          >
-            Home
-          </Link>
-          <Link 
-            href="/about" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 active:scale-95 transition-colors"
-          >
-            About
-          </Link>
-          <Link 
-            href="/services" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 active:scale-95 transition-colors"
-          >
-            Services
-          </Link>
-          <Link 
-            href="/resources" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 active:scale-95 transition-colors"
-          >
-            Resources
-          </Link>
-          <Link 
-            href="/calculator" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 active:scale-95 transition-colors"
-          >
-            Calculator
-          </Link>
-          <Link 
-            href="/contact" 
-            className="text-slate-800 font-bold text-lg py-2 hover:text-blue-700 active:scale-95 transition-colors"
-          >
-            Contact
-          </Link>
+        <div className="md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl py-6 px-6 flex flex-col gap-3 text-left animate-fade-in-up">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link 
+                key={item.name}
+                href={item.href}
+                onClick={item.onClick}
+                className={`px-4 py-3 rounded-xl text-base transition-all duration-200 flex items-center justify-between ${
+                  isActive 
+                    ? "bg-blue-50 text-blue-900 font-extrabold border-l-4 border-blue-900 shadow-xs" 
+                    : "text-slate-700 font-medium hover:bg-slate-50 hover:text-blue-900"
+                }`}
+              >
+                <span>{item.name}</span>
+                {isActive && <span className="w-2 h-2 rounded-full bg-blue-900"></span>}
+              </Link>
+            );
+          })}
         </div>
       )}
     </nav>
