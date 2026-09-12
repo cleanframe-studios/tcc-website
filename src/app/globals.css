@@ -6,6 +6,8 @@
 .max-w-6xl {
   width: 100%;
   max-width: none;
+  box-sizing: border-box;
+  padding-inline: clamp(1.5rem, 3vw, 3rem);
 }
 
 body {
