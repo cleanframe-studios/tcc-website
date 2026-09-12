@@ -104,15 +104,7 @@ export default function Resources() {
           </div>
 
           {/* FIXED-HEIGHT SCROLLABLE CONTAINER FOR DOCUMENTS */}
-          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 
-            [&::-webkit-scrollbar]:w-2 
-            [&::-webkit-scrollbar-track]:bg-white/5 
-            [&::-webkit-scrollbar-track]:rounded-full 
-            [&::-webkit-scrollbar-thumb]:bg-white/20 
-            [&::-webkit-scrollbar-thumb]:rounded-full 
-            hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60
-            transition-colors duration-300"
-          >
+          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60 transition-colors duration-300">
             <div className="flex flex-col gap-4">
               {filteredDocs.length === 0 ? (
                 <div className="text-center py-12 text-blue-200 font-medium bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
@@ -159,7 +151,8 @@ export default function Resources() {
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
             <h2 className="text-2xl font-extrabold text-white flex items-center gap-3">
-              <Building2 className="w-6 h-6 text-amber-400" /> State Internal Revenue Services (SIRS) &amp; FCT
+              <Building2 className="w-6 h-6 text-amber-400" />
+              <span>State Internal Revenue Services (SIRS) &amp; FCT</span>
             </h2>
             
             <div className="relative w-full md:w-72 shrink-0">
@@ -177,15 +170,7 @@ export default function Resources() {
           </div>
 
           {/* FIXED-HEIGHT SCROLLABLE CONTAINER FOR STATES */}
-          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 
-            [&::-webkit-scrollbar]:w-2 
-            [&::-webkit-scrollbar-track]:bg-white/5 
-            [&::-webkit-scrollbar-track]:rounded-full 
-            [&::-webkit-scrollbar-thumb]:bg-white/20 
-            [&::-webkit-scrollbar-thumb]:rounded-full 
-            hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60
-            transition-colors duration-300"
-          >
+          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60 transition-colors duration-300">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredStates.length === 0 ? (
                 <div className="col-span-1 md:col-span-2 text-center py-12 text-slate-400 font-medium bg-white/5 rounded-xl border border-white/10">
