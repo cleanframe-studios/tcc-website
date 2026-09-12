@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Let structural page containers use the viewport; text blocks keep their own narrower limits. */
+.max-w-4xl,
+.max-w-5xl,
+.max-w-6xl {
+  width: 100%;
+  max-width: none;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
 }
