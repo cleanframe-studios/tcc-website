@@ -12,7 +12,7 @@ export default function Footer() {
             </p>
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-blue-900/5 border border-blue-900/15 rounded-full text-blue-900 text-xs font-extrabold tracking-wider">
               <ShieldCheck className="w-4 h-4 text-amber-500" />
-              FEDERAL REGISTRATION: RC - 9820867
+              CAC REGISTRATION: RC - 9820867
             </div>
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-sm font-semibold text-slate-500 md:pt-10">

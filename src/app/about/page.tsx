@@ -22,7 +22,7 @@ export default function AboutPage() {
           <div className="mt-8 flex justify-center">
             <div className="flex items-center gap-2 px-4 py-1.5 bg-white/50 backdrop-blur-md border border-slate-200/60 rounded-full shadow-sm text-slate-700 text-xs font-bold tracking-widest uppercase">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              Officially Registered Entity (RC: 9820867)
+              CAC Registered Entity (RC: 9820867)
             </div>
           </div>
         </div>
