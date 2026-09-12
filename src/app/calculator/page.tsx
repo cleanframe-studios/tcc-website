@@ -1,179 +1,94 @@
 "use client";
 
 import { useState } from 'react';
-import { Calculator as CalcIcon, Coins, ShieldCheck, Plus, Minus } from 'lucide-react';
+import { Calculator as CalcIcon, Coins, ShieldCheck } from 'lucide-react';
+
+type CalculatorMode = 'individual' | 'vat' | 'company';
+
+const formatNaira = (amount: number) =>
+  new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(Math.max(0, amount));
+
+const toNumber = (value: string) => Math.max(0, Number(value) || 0);
+
+const calculateProgressiveTax = (chargeableIncome: number) => {
+  const bands = [
+    { limit: 800000, rate: 0 },
+    { limit: 2200000, rate: 0.15 },
+    { limit: 9000000, rate: 0.18 },
+    { limit: 13000000, rate: 0.21 },
+    { limit: 25000000, rate: 0.23 },
+    { limit: Infinity, rate: 0.25 }
+  ];
+  let remaining = Math.max(0, chargeableIncome);
+  let tax = 0;
+  for (const band of bands) {
+    const taxableInBand = Math.min(remaining, band.limit);
+    tax += taxableInBand * band.rate;
+    remaining -= taxableInBand;
+    if (remaining <= 0) break;
+  }
+  return tax;
+};
+
+function MoneyInput({ label, value, onChange }: { label: string; value: number; onChange: (value: number) => void }) {
+  return (
+    <label className="block">
+      <span className="block text-xs font-bold uppercase tracking-wider text-blue-200 mb-2">{label}</span>
+      <div className="relative">
+        <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 font-bold">N</span>
+        <input type="number" min="0" value={value} onChange={(event) => onChange(toNumber(event.target.value))} className="w-full pl-10 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-2xl text-white font-bold focus:outline-none focus:border-amber-400 transition-colors [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none" />
+      </div>
+    </label>
+  );
+}
+
+function ResultPanel({ title, children }: { title: string; children: React.ReactNode }) {
+  return <div className="md:col-span-5 p-8 rounded-3xl border border-amber-400/30 bg-white/15 backdrop-blur-md shadow-2xl"><h2 className="text-xl font-extrabold mb-6 text-amber-300 flex items-center gap-2"><Coins className="w-5 h-5" /> {title}</h2><div className="space-y-4">{children}</div></div>;
+}
+
+function ResultRow({ label, value, highlight = false }: { label: string; value: string; highlight?: boolean }) {
+  return <div className="flex justify-between items-center gap-4 pb-3 border-b border-white/10"><span className="text-sm text-blue-200">{label}</span><span className={`text-right font-extrabold ${highlight ? 'text-amber-300 text-lg' : 'text-white'}`}>{value}</span></div>;
+}
+
+function SelectInput({ label, value, options, onChange }: { label: string; value: string; options: readonly (readonly [string, string])[]; onChange: (value: string) => void }) {
+  return <label className="block"><span className="block text-xs font-bold uppercase tracking-wider text-blue-200 mb-2">{label}</span><select value={value} onChange={(event) => onChange(event.target.value)} className="w-full px-4 py-3.5 bg-blue-950 border border-white/20 rounded-2xl text-white font-bold focus:outline-none focus:border-amber-400">{options.map(([optionValue, optionLabel]) => <option key={optionValue} value={optionValue}>{optionLabel}</option>)}</select></label>;
+}
 
 export default function Calculator() {
-  const [grossIncome, setGrossIncome] = useState<number>(5000000);
-  const [pensionPercent, setPensionPercent] = useState<number>(8);
+  const [mode, setMode] = useState<CalculatorMode>('individual');
+  const [individual, setIndividual] = useState({ monthlyIncome: 500000, annualRent: 0, pension: 360000, nhf: 0, nhis: 0, mortgageInterest: 0, lifeInsurance: 0 });
+  const [vat, setVat] = useState({ amount: 1000000, inputVat: 0, pricing: 'exclusive', supply: 'taxable' });
+  const [company, setCompany] = useState({ turnover: 10000000, profit: 3000000, fixedAssets: 50000000 });
 
-  const handlePensionChange = (delta: number) => {
-    setPensionPercent(prev => Math.min(100, Math.max(0, prev + delta)));
-  };
+  const updateIndividual = (field: keyof typeof individual, value: number) => setIndividual((current) => ({ ...current, [field]: value }));
+  const annualIncome = individual.monthlyIncome * 12;
+  const rentRelief = Math.min(individual.annualRent * 0.2, 500000);
+  const eligibleDeductions = individual.pension + individual.nhf + individual.nhis + individual.mortgageInterest + individual.lifeInsurance + rentRelief;
+  const chargeableIncome = Math.max(0, annualIncome - eligibleDeductions);
+  const individualTax = individual.monthlyIncome <= 70000 ? 0 : calculateProgressiveTax(chargeableIncome);
+  const monthlyPAYE = individualTax / 12;
+  const netAnnualIncome = annualIncome - individualTax - individual.pension - individual.nhf - individual.nhis;
 
-  // Nigerian Tax Calculation Logic
-  const annualPension = (grossIncome * pensionPercent) / 100;
-  const cra = Math.max(grossIncome * 0.01, 200000) + (grossIncome * 0.20);
-  const totalReliefs = annualPension + cra;
-  const taxableIncome = Math.max(0, grossIncome - totalReliefs);
-
-  const calculateTax = (income: number) => {
-    let tax = 0;
-    let remaining = income;
-
-    const band1 = Math.min(remaining, 300000);
-    tax += band1 * 0.07;
-    remaining -= band1;
-    if (remaining <= 0) return tax;
-
-    const band2 = Math.min(remaining, 300000);
-    tax += band2 * 0.11;
-    remaining -= band2;
-    if (remaining <= 0) return tax;
-
-    const band3 = Math.min(remaining, 500000);
-    tax += band3 * 0.15;
-    remaining -= band3;
-    if (remaining <= 0) return tax;
-
-    const band4 = Math.min(remaining, 500000);
-    tax += band4 * 0.19;
-    remaining -= band4;
-    if (remaining <= 0) return tax;
-
-    const band5 = Math.min(remaining, 1600000);
-    tax += band5 * 0.21;
-    remaining -= band5;
-    if (remaining <= 0) return tax;
-
-    tax += remaining * 0.24;
-    return tax;
-  };
-
-  const annualTax = calculateTax(taxableIncome);
-  const monthlyTax = annualTax / 12;
-  const netAnnualIncome = grossIncome - annualTax - annualPension;
-  const netMonthlyIncome = netAnnualIncome / 12;
-
-  const formatNaira = (amount: number) => {
-    return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(amount);
-  };
+  const isTaxableSupply = vat.supply === 'taxable';
+  const vatAmount = !isTaxableSupply ? 0 : vat.pricing === 'inclusive' ? vat.amount * 7.5 / 107.5 : vat.amount * 0.075;
+  const taxableValue = !isTaxableSupply ? vat.amount : vat.pricing === 'inclusive' ? vat.amount - vatAmount : vat.amount;
+  const vatPayable = Math.max(0, vatAmount - vat.inputVat);
+  const isSmallCompany = company.turnover <= 100000000 && company.fixedAssets <= 250000000;
+  const cit = isSmallCompany ? 0 : company.profit * 0.3;
+  const developmentLevy = isSmallCompany ? 0 : company.profit * 0.04;
 
   return (
     <main className="min-h-screen bg-transparent">
-      
-      {/* HEADER */}
-      <section className="tcc-canvas pt-32 pb-16 px-6 border-b border-slate-200/60">
-        <div className="max-w-4xl mx-auto text-center">
-          <span className="text-blue-700 font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-in-up">
-            Interactive Fiscal Tool
-          </span>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6 animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">
-            Nigerian Personal Income <br/> Tax Calculator.
-          </h1>
-          <p className="text-slate-600 max-w-xl mx-auto text-base leading-relaxed animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">
-            Estimate your annual and monthly tax obligations instantly based on current statutory relief schedules and progressive tax bands.
-          </p>
-        </div>
-      </section>
+      <section className="tcc-canvas pt-32 pb-16 px-6 border-b border-slate-200/60"><div className="max-w-4xl mx-auto text-center"><span className="text-blue-700 font-bold tracking-[0.2em] uppercase text-xs mb-4 block animate-fade-in-up">Interactive Fiscal Tool</span><h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6 animate-fade-in-up animation-delay-200 opacity-0 [animation-fill-mode:forwards]">Nigeria Tax Calculator.</h1><p className="text-slate-600 max-w-xl mx-auto text-base leading-relaxed animate-fade-in-up animation-delay-400 opacity-0 [animation-fill-mode:forwards]">Estimate 2026 personal income tax, VAT, and company tax obligations using the Nigeria Tax Act 2025 framework.</p></div></section>
+      <section className="py-20 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white"><div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-2 mb-8 rounded-2xl border border-white/15 bg-white/10">{([['individual', 'Individual / PAYE'], ['vat', 'VAT'], ['company', 'Company tax']] as const).map(([value, label]) => <button key={value} onClick={() => setMode(value)} className={`px-4 py-3 rounded-xl text-sm font-bold transition-colors ${mode === value ? 'bg-amber-400 text-blue-950' : 'text-blue-100 hover:bg-white/10'}`}>{label}</button>)}</div>
 
-      {/* CALCULATOR INTERFACE */}
-      <section className="py-20 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          
-          {/* INPUT CONTROLS */}
-          <div className="md:col-span-6 p-8 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl">
-            <h2 className="text-xl font-extrabold mb-6 flex items-center gap-2 text-white">
-              <CalcIcon className="w-5 h-5 text-amber-400" /> Income Parameters
-            </h2>
+        {mode === 'individual' && <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start"><div className="md:col-span-7 p-8 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl"><h2 className="text-xl font-extrabold mb-6 flex items-center gap-2"><CalcIcon className="w-5 h-5 text-amber-400" /> Individual / PAYE inputs</h2><div className="grid grid-cols-1 sm:grid-cols-2 gap-5"><MoneyInput label="Monthly employment income" value={individual.monthlyIncome} onChange={(value) => updateIndividual('monthlyIncome', value)} /><MoneyInput label="Annual rent paid" value={individual.annualRent} onChange={(value) => updateIndividual('annualRent', value)} /><MoneyInput label="Annual pension contribution" value={individual.pension} onChange={(value) => updateIndividual('pension', value)} /><MoneyInput label="NHF contribution" value={individual.nhf} onChange={(value) => updateIndividual('nhf', value)} /><MoneyInput label="NHIS contribution" value={individual.nhis} onChange={(value) => updateIndividual('nhis', value)} /><MoneyInput label="Qualifying mortgage interest" value={individual.mortgageInterest} onChange={(value) => updateIndividual('mortgageInterest', value)} /><MoneyInput label="Life insurance / annuity" value={individual.lifeInsurance} onChange={(value) => updateIndividual('lifeInsurance', value)} /></div><div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 text-xs text-blue-100"><ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" /><p>Rent relief is capped at N500,000. Monthly employment income of N70,000 or less is exempt from PAYE.</p></div></div><ResultPanel title="Personal tax estimate"><ResultRow label="Eligible deductions" value={formatNaira(eligibleDeductions)} /><ResultRow label="Chargeable income" value={formatNaira(chargeableIncome)} /><ResultRow label="Annual PIT" value={formatNaira(individualTax)} /><ResultRow label="Estimated monthly PAYE" value={formatNaira(monthlyPAYE)} /><ResultRow label="Estimated net annual income" value={formatNaira(netAnnualIncome)} highlight /></ResultPanel></div>}
 
-            <div className="mb-6">
-              <label className="block text-xs font-bold uppercase tracking-wider text-blue-200 mb-2">
-                Gross Annual Income (₦)
-              </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 font-bold">₦</span>
-                <input 
-                  type="number"
-                  value={grossIncome}
-                  onChange={(e) => setGrossIncome(Number(e.target.value))}
-                  className="w-full pl-10 pr-4 py-3.5 bg-white/10 border border-white/20 rounded-2xl text-white font-bold text-lg focus:outline-none focus:border-amber-400 transition-colors [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                />
-              </div>
-            </div>
+        {mode === 'vat' && <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start"><div className="md:col-span-7 p-8 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl"><h2 className="text-xl font-extrabold mb-6 flex items-center gap-2"><CalcIcon className="w-5 h-5 text-amber-400" /> VAT inputs</h2><div className="space-y-5"><MoneyInput label="Transaction amount" value={vat.amount} onChange={(value) => setVat((current) => ({ ...current, amount: value }))} /><MoneyInput label="Allowable input VAT" value={vat.inputVat} onChange={(value) => setVat((current) => ({ ...current, inputVat: value }))} /><SelectInput label="Price display" value={vat.pricing} options={[['exclusive', 'Amount before VAT'], ['inclusive', 'Amount already includes VAT']]} onChange={(value) => setVat((current) => ({ ...current, pricing: value }))} /><SelectInput label="Supply category" value={vat.supply} options={[['taxable', 'Taxable supply'], ['zero-rated', 'Zero-rated supply'], ['exempt', 'Exempt supply']]} onChange={(value) => setVat((current) => ({ ...current, supply: value }))} /></div></div><ResultPanel title="VAT estimate"><ResultRow label="Taxable value" value={formatNaira(taxableValue)} /><ResultRow label="Output VAT (7.5%)" value={formatNaira(vatAmount)} /><ResultRow label="Input VAT credit" value={formatNaira(vat.inputVat)} /><ResultRow label="VAT payable" value={formatNaira(vatPayable)} highlight /></ResultPanel></div>}
 
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-blue-200">
-                  Pension Contribution (%)
-                </label>
-                <div className="flex gap-1">
-                  <button 
-                    onClick={() => handlePensionChange(-1)}
-                    className="p-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-xs font-bold text-white transition-all active:scale-95 cursor-pointer"
-                    title="Decrease 1%"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </button>
-                  <button 
-                    onClick={() => handlePensionChange(1)}
-                    className="p-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-xs font-bold text-white transition-all active:scale-95 cursor-pointer"
-                    title="Increase 1%"
-                  >
-                    <Plus className="w-3 h-3" />
-                  </button>
-                </div>
-              </div>
-              <input 
-                type="number"
-                value={pensionPercent}
-                onChange={(e) => setPensionPercent(Number(e.target.value))}
-                className="w-full px-4 py-3.5 bg-white/10 border border-white/20 rounded-2xl text-white font-bold text-lg focus:outline-none focus:border-amber-400 transition-colors [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-              />
-            </div>
-
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3 text-xs text-blue-100">
-              <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-              <p>Calculations incorporate statutory Consolidated Relief Allowance (CRA) and progressive tax brackets in compliance with Nigerian tax regulations.</p>
-            </div>
-          </div>
-
-          {/* RESULTS DISPLAY */}
-          <div className="md:col-span-6 p-8 rounded-3xl border border-amber-400/30 bg-white/15 backdrop-blur-md shadow-2xl flex flex-col justify-between">
-            <div>
-              <h2 className="text-xl font-extrabold mb-6 text-amber-300 flex items-center gap-2">
-                <Coins className="w-5 h-5" /> Tax Breakdown Summary
-              </h2>
-
-              <div className="space-y-4 mb-8">
-                <div className="flex justify-between items-center pb-3 border-b border-white/10">
-                  <span className="text-sm text-blue-200">Annual Tax Due:</span>
-                  <span className="text-lg font-extrabold text-white">{formatNaira(annualTax)}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-white/10">
-                  <span className="text-sm text-blue-200">Estimated Monthly Tax:</span>
-                  <span className="text-lg font-extrabold text-white">{formatNaira(monthlyTax)}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-white/10">
-                  <span className="text-sm text-blue-200">Annual Pension Deduction:</span>
-                  <span className="text-base font-bold text-blue-100">{formatNaira(annualPension)}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-white/10">
-                  <span className="text-sm text-blue-200">Net Annual Take-Home:</span>
-                  <span className="text-xl font-extrabold text-amber-300">{formatNaira(netAnnualIncome)}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-blue-900/60 border border-blue-400/30 text-center">
-              <p className="text-xs text-blue-200 mb-1">Net Monthly Take-Home Pay</p>
-              <div className="text-2xl font-black text-white">{formatNaira(netMonthlyIncome)}</div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
+        {mode === 'company' && <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start"><div className="md:col-span-7 p-8 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl"><h2 className="text-xl font-extrabold mb-6 flex items-center gap-2"><CalcIcon className="w-5 h-5 text-amber-400" /> Company tax inputs</h2><div className="space-y-5"><MoneyInput label="Annual gross turnover" value={company.turnover} onChange={(value) => setCompany((current) => ({ ...current, turnover: value }))} /><MoneyInput label="Assessable / chargeable profit" value={company.profit} onChange={(value) => setCompany((current) => ({ ...current, profit: value }))} /><MoneyInput label="Total fixed assets" value={company.fixedAssets} onChange={(value) => setCompany((current) => ({ ...current, fixedAssets: value }))} /></div><div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-blue-100">Small company threshold: turnover up to N100,000,000 and fixed assets up to N250,000,000.</div></div><ResultPanel title="Company tax estimate"><ResultRow label="Company category" value={isSmallCompany ? 'Small company' : 'Other company'} /><ResultRow label="CIT" value={formatNaira(cit)} /><ResultRow label="Development levy (4%)" value={formatNaira(developmentLevy)} /><ResultRow label="Total estimated tax" value={formatNaira(cit + developmentLevy)} highlight /></ResultPanel></div>}
+      </div></section>
     </main>
   );
 }
