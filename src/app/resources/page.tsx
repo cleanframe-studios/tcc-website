@@ -86,7 +86,8 @@ export default function Resources() {
       <section className="py-20 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white border-b border-blue-900/40">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-extrabold mb-8 text-white flex items-center gap-3">
-            <FileText className="w-6 h-6 text-amber-400" /> Statutes &amp; Federal Guidelines
+            <FileText className="w-6 h-6 text-amber-400" />
+            <span>Statutes &amp; Federal Guidelines</span>
           </h2>
 
           <div className="relative mb-8">
