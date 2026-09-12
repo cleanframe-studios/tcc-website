@@ -15,43 +15,43 @@ export default function Resources() {
   ];
 
   const stateIRS = [
-    { state: "Abia State", name: "Abia State Internal Revenue Service", url: "https://abiastate.gov.ng" },
-    { state: "Adamawa State", name: "Adamawa State Internal Revenue Service", url: "https://adamawastate.gov.ng" },
-    { state: "Akwa Ibom State", name: "Akwa Ibom State Internal Revenue Service", url: "https://aksirs.gov.ng" },
-    { state: "Anambra State", name: "Anambra State Internal Revenue Service", url: "https://anambrairs.gov.ng" },
-    { state: "Bauchi State", name: "Bauchi State Internal Revenue Service", url: "https://bauchiir.gov.ng" },
-    { state: "Bayelsa State", name: "Bayelsa State Internal Revenue Service", url: "https://byirs.bayelsa.gov.ng" },
+    { state: "Abia State", name: "Abia State Internal Revenue Service", url: "https://abiairs.gov.ng" },
+    { state: "Adamawa State", name: "Adamawa State Internal Revenue Service", url: "https://ad-irs.adamawastate.gov.ng" },
+    { state: "Akwa Ibom State", name: "Akwa Ibom State Internal Revenue Service", url: "https://akirs.ak.gov.ng" },
+    { state: "Anambra State", name: "Anambra State Internal Revenue Service", url: "https://services.an.gov.ng" },
+    { state: "Bauchi State", name: "Bauchi State Internal Revenue Service", url: "https://birs.bu.gov.ng" },
+    { state: "Bayelsa State", name: "Bayelsa State Internal Revenue Service", url: "https://bir.by.gov.ng" },
     { state: "Benue State", name: "Benue State Internal Revenue Service", url: "https://birs.be.gov.ng" },
-    { state: "Borno State", name: "Borno State Internal Revenue Service", url: "https://bornoirs.bornostate.gov.ng" },
-    { state: "Cross River State", name: "Cross River State Internal Revenue Service", url: "https://crirs.cr.gov.ng" },
-    { state: "Delta State", name: "Delta State Internal Revenue Service", url: "https://dtirs.deltastate.gov.ng" },
-    { state: "Ebonyi State", name: "Ebonyi State Internal Revenue Service", url: "https://ebonyi.gov.ng" },
-    { state: "Edo State", name: "Edo State Internal Revenue Service", url: "https://irs.edostate.gov.ng" },
-    { state: "Ekiti State", name: "Ekiti State Internal Revenue Service", url: "https://ekitistaterevenue.com" },
-    { state: "Enugu State", name: "Enugu State Internal Revenue Service", url: "https://esirs.en.gov.ng" },
+    { state: "Borno State", name: "Borno State Internal Revenue Service", url: "https://birs.bo.gov.ng" },
+    { state: "Cross River State", name: "Cross River State Internal Revenue Service", url: "https://crirs.crossriverstate.gov.ng" },
+    { state: "Delta State", name: "Delta State Internal Revenue Service", url: "https://deltairs.com" },
+    { state: "Ebonyi State", name: "Ebonyi State Internal Revenue Service", url: "https://ebsirs.eb.gov.ng" },
+    { state: "Edo State", name: "Edo State Internal Revenue Service", url: "https://eirs.gov.ng" },
+    { state: "Ekiti State", name: "Ekiti State Internal Revenue Service", url: "https://irs.ekitistate.gov.ng" },
+    { state: "Enugu State", name: "Enugu State Internal Revenue Service", url: "https://irs.en.gov.ng" },
     { state: "FCT, Abuja", name: "Federal Capital Territory Internal Revenue Service", url: "https://fctirs.gov.ng" },
-    { state: "Gombe State", name: "Gombe State Internal Revenue Service", url: "https://girs.gombe.state.ng" },
-    { state: "Imo State", name: "Imo State Internal Revenue Service", url: "https://imoirs.imostate.gov.ng" },
-    { state: "Jigawa State", name: "Jigawa State Internal Revenue Service", url: "https://jigawastate.gov.ng" },
+    { state: "Gombe State", name: "Gombe State Internal Revenue Service", url: "https://irs.gm.gov.ng" },
+    { state: "Imo State", name: "Imo State Internal Revenue Service", url: "https://www.iirs.im.gov.ng" },
+    { state: "Jigawa State", name: "Jigawa State Internal Revenue Service", url: "https://jsirs.org.ng" },
     { state: "Kaduna State", name: "Kaduna State Internal Revenue Service", url: "https://kadirs.kdsg.gov.ng" },
     { state: "Kano State", name: "Kano State Internal Revenue Service", url: "https://kirs.gov.ng" },
-    { state: "Katsina State", name: "Katsina State Internal Revenue Service", url: "https://ktsirs.katsinastate.gov.ng" },
-    { state: "Kebbi State", name: "Kebbi State Internal Revenue Service", url: "https://kebbistate.gov.ng" },
-    { state: "Kogi State", name: "Kogi State Internal Revenue Service", url: "https://kgirs.kogi.gov.ng" },
-    { state: "Kwara State", name: "Kwara State Internal Revenue Service", url: "https://kwrs.kwara.gov.ng" },
-    { state: "Lagos State", name: "Lagos State Internal Revenue Service (LIRS)", url: "https://www.lirs.gov.ng" },
-    { state: "Nasarawa State", name: "Nasarawa State Internal Revenue Service", url: "https://nsirs.nasarawastate.gov.ng" },
-    { state: "Niger State", name: "Niger State Internal Revenue Service", url: "https://irs.nigerstate.gov.ng" },
-    { state: "Ogun State", name: "Ogun State Internal Revenue Service", url: "https://ogirs.ogunstate.gov.ng" },
-    { state: "Ondo State", name: "Ondo State Internal Revenue Service", url: "https://odirs.ondo.gov.ng" },
-    { state: "Osun State", name: "Osun State Internal Revenue Service", url: "https://osunirs.osun.state.ng" },
-    { state: "Oyo State", name: "Oyo State Internal Revenue Service", url: "https://oyirs.oyostate.gov.ng" },
-    { state: "Plateau State", name: "Plateau State Internal Revenue Service", url: "https://psirs.plateaustate.gov.ng" },
-    { state: "Rivers State", name: "Rivers State Internal Revenue Service", url: "https://rivirs.ng" },
-    { state: "Sokoto State", name: "Sokoto State Internal Revenue Service", url: "https://sokotostate.gov.ng" },
-    { state: "Taraba State", name: "Taraba State Internal Revenue Service", url: "https://tarabastate.gov.ng" },
-    { state: "Yobe State", name: "Yobe State Internal Revenue Service", url: "https://yobeirs.gov.ng" },
-    { state: "Zamfara State", name: "Zamfara State Internal Revenue Service", url: "https://zamfarastate.gov.ng" }
+    { state: "Katsina State", name: "Katsina State Internal Revenue Service", url: "https://irs.kt.gov.ng" },
+    { state: "Kebbi State", name: "Kebbi State Internal Revenue Service", url: "https://irs.kb.gov.ng" },
+    { state: "Kogi State", name: "Kogi State Internal Revenue Service", url: "https://irs.kg.gov.ng" },
+    { state: "Kwara State", name: "Kwara State Internal Revenue Service", url: "https://irs.kw.gov.ng" },
+    { state: "Lagos State", name: "Lagos State Internal Revenue Service (LIRS)", url: "https://lirs.net" },
+    { state: "Nasarawa State", name: "Nasarawa State Internal Revenue Service", url: "https://irs.na.gov.ng" },
+    { state: "Niger State", name: "Niger State Internal Revenue Service", url: "https://ngsirs.gov.ng" },
+    { state: "Ogun State", name: "Ogun State Internal Revenue Service", url: "https://www.ogunstaterevenue.com" },
+    { state: "Ondo State", name: "Ondo State Internal Revenue Service", url: "https://odirs.ng" },
+    { state: "Osun State", name: "Osun State Internal Revenue Service", url: "https://www.oirs.ng" },
+    { state: "Oyo State", name: "Oyo State Internal Revenue Service", url: "https://bir.oyostate.gov.ng" },
+    { state: "Plateau State", name: "Plateau State Internal Revenue Service", url: "https://www.psirs.gov.ng" },
+    { state: "Rivers State", name: "Rivers State Internal Revenue Service", url: "https://riversbirs.gov.ng" },
+    { state: "Sokoto State", name: "Sokoto State Internal Revenue Service", url: "https://irs.sk.gov.ng" },
+    { state: "Taraba State", name: "Taraba State Internal Revenue Service", url: "https://tarababir.gov.ng" },
+    { state: "Yobe State", name: "Yobe State Internal Revenue Service", url: "https://irs.yb.gov.ng" },
+    { state: "Zamfara State", name: "Zamfara State Internal Revenue Service", url: "https://irs.zm.gov.ng" }
   ];
 
   const filteredDocs = documents.filter(doc =>
@@ -192,6 +192,7 @@ export default function Resources() {
                 </div>
               ) : (
                 filteredStates.map((item, index) => (
+                  item.url ? (
                   <a 
                     key={index}
                     href={item.url}
@@ -209,6 +210,17 @@ export default function Resources() {
                     </div>
                     <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors shrink-0 ml-2" />
                   </a>
+                  ) : (
+                    <div key={index} className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md h-fit">
+                      <div>
+                        <span className="text-xs font-bold text-amber-400 tracking-wider uppercase">
+                          {item.state}
+                        </span>
+                        <h4 className="text-sm font-bold text-white">{item.name}</h4>
+                      </div>
+                      <span className="text-xs font-semibold text-slate-400 ml-2">Coming soon</span>
+                    </div>
+                  )
                 ))
               )}
             </div>
