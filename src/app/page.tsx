@@ -72,8 +72,8 @@ export default function Home() {
   ]; 
   
   const speakers = [
-    { name: "Toluwalogo Odutayo", title: "Partner", role: "Deloitte", image: "/speakers/1.png" },
     { name: "Dr. Tolu Adegbie", title: "Former Exec. Chairman", role: "ODIRS", image: "/speakers/2.png" },
+    { name: "Toluwalogo Odutayo", title: "Partner", role: "Deloitte", image: "/speakers/1.png" },
     { name: "Mallam Haruna Yahaya", title: "61st President", role: "ICAN", image: "/speakers/3.png" },
     { name: "Mr. Segun Tijani", title: "Head, HNWI Unit", role: "LIRS", image: "/speakers/4.png" },
     { name: "Dr. Oluwashola Ganiyu", title: "Managing Partner", role: "KJB Professional Services", image: "/speakers/5.png" },
