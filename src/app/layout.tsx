@@ -10,8 +10,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Tax Clinic Corner",
-  description: "Professional tax education and regulatory guidance designed for the modern business landscape.",
+  title: "Tax Clinic Corner | Fiscal Intelligence & Policy Education",
+  description: "A Nigerian digital media and tax policy education platform bridging the knowledge gap between regulatory authorities and the public.",
+  keywords: "Tax Clinic Corner, TCC Educational Media, Nigeria Tax Act, tax policy education, fiscal literacy Nigeria",
   icons: {
     icon: "/tcc_logo.png",
   },
