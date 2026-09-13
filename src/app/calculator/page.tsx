@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from 'react';
-import { Calculator as CalcIcon, Coins, ShieldCheck } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Calculator as CalcIcon, Check, ChevronDown, Coins, ShieldCheck } from 'lucide-react';
 
 type CalculatorMode = 'individual' | 'vat' | 'company';
 type NumericInput = number | '';
@@ -72,7 +72,63 @@ function ResultRow({ label, value, highlight = false }: { label: string; value: 
 }
 
 function SelectInput({ label, value, options, onChange }: { label: string; value: string; options: readonly (readonly [string, string])[]; onChange: (value: string) => void }) {
-  return <label className="block"><span className="block text-xs font-bold uppercase tracking-wider text-blue-200 mb-2">{label}</span><select value={value} onChange={(event) => onChange(event.target.value)} className="w-full px-4 py-3.5 bg-blue-950 border border-white/20 rounded-2xl text-white font-bold focus:outline-none focus:border-amber-400">{options.map(([optionValue, optionLabel]) => <option key={optionValue} value={optionValue}>{optionLabel}</option>)}</select></label>;
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const selectedOption = options.find(([optionValue]) => optionValue === value) ?? options[0];
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) setIsOpen(false);
+    };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative block">
+      <span className="block text-xs font-bold uppercase tracking-wider text-blue-200 mb-2">{label}</span>
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((current) => !current)}
+        className={`flex w-full items-center justify-between gap-3 px-4 py-3.5 rounded-2xl border text-left font-bold text-white transition-all duration-200 ${isOpen ? 'border-amber-400 bg-blue-950 shadow-[0_0_0_3px_rgba(251,191,36,0.12)]' : 'border-white/20 bg-blue-950/80 hover:border-white/40'}`}
+      >
+        <span>{selectedOption?.[1]}</span>
+        <ChevronDown className={`w-4 h-4 shrink-0 text-amber-300 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      {isOpen && (
+        <div role="listbox" aria-label={label} className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-white/15 bg-slate-950/95 p-1.5 shadow-2xl backdrop-blur-xl">
+          {options.map(([optionValue, optionLabel]) => {
+            const isSelected = optionValue === value;
+            return (
+              <button
+                key={optionValue}
+                type="button"
+                role="option"
+                aria-selected={isSelected}
+                onClick={() => {
+                  onChange(optionValue);
+                  setIsOpen(false);
+                }}
+                className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm transition-colors ${isSelected ? 'bg-amber-400 text-blue-950' : 'text-blue-100 hover:bg-white/10 hover:text-white'}`}
+              >
+                <span>{optionLabel}</span>
+                {isSelected && <Check className="w-4 h-4" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function Calculator() {
