@@ -83,7 +83,7 @@ export default function Resources() {
       </section>
 
       {/* SECTION 1: DOWNLOADABLE ACTS */}
-      <section className="py-20 px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white border-b border-blue-900/40">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 animate-moving-gradient text-white border-b border-blue-900/40">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-extrabold mb-8 text-white flex items-center gap-3">
             <FileText className="w-6 h-6 text-amber-400" />
@@ -104,8 +104,8 @@ export default function Resources() {
           </div>
 
           {/* FIXED-HEIGHT SCROLLABLE CONTAINER FOR DOCUMENTS */}
-          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60 transition-colors duration-300">
-            <div className="flex flex-col gap-4">
+          <div className="max-h-112.5 overflow-y-auto pr-1 sm:pr-2 md:pr-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/25 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60 transition-colors duration-300">
+            <div className="flex flex-col gap-2 sm:gap-4">
               {filteredDocs.length === 0 ? (
                 <div className="text-center py-12 text-blue-200 font-medium bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
                   No documents found matching &quot;{docSearch}&quot;.
@@ -114,17 +114,17 @@ export default function Resources() {
                 filteredDocs.map((doc) => (
                   <div 
                     key={doc.id}
-                    className="group flex items-center justify-between p-5 md:p-6 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30"
+                    className="group flex items-center justify-between gap-3 p-3 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-lg transition-all duration-300 hover:bg-white/20 hover:border-white/30"
                   >
-                    <div className="flex items-center gap-4 pr-4">
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0 text-white">
-                        <FileText className="w-5 h-5 md:w-6 md:h-6" />
+                    <div className="flex min-w-0 items-center gap-3 sm:gap-4 pr-1 sm:pr-4">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white/15 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 text-white">
+                        <FileText className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
                       </div>
-                      <div>
-                        <span className="inline-block text-amber-300 font-bold text-xs tracking-wider mb-1">
+                      <div className="min-w-0">
+                        <span className="inline-block text-amber-300 font-bold text-[10px] sm:text-xs tracking-wider mb-0.5 sm:mb-1">
                           {doc.code}
                         </span>
-                        <h3 className="text-base md:text-lg font-extrabold text-white group-hover:text-amber-200 transition-colors">
+                        <h3 className="text-sm sm:text-base md:text-lg font-extrabold leading-snug text-white group-hover:text-amber-200 transition-colors">
                           {doc.name}
                         </h3>
                       </div>
@@ -133,7 +133,7 @@ export default function Resources() {
                     <a 
                       href={doc.file}
                       download
-                      className="inline-flex items-center gap-2 px-5 py-3 bg-white text-blue-900 text-xs md:text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md shrink-0 btn-shine"
+                      className="inline-flex items-center justify-center w-10 h-10 sm:w-auto sm:h-auto sm:gap-2 sm:px-5 sm:py-3 bg-white text-blue-900 text-xs md:text-sm font-bold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md shrink-0 btn-shine"
                     >
                       <Download className="w-4 h-4" /> 
                       <span className="hidden sm:inline">Download</span>
@@ -147,7 +147,7 @@ export default function Resources() {
       </section>
 
       {/* SECTION 2: STATE IRS DIRECTORY */}
-      <section className="py-20 px-6 bg-slate-900 text-white">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 bg-slate-900 text-white">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
             <h2 className="text-2xl font-extrabold text-white flex items-center gap-3">
@@ -170,8 +170,8 @@ export default function Resources() {
           </div>
 
           {/* FIXED-HEIGHT SCROLLABLE CONTAINER FOR STATES */}
-          <div className="h-112.5 overflow-y-auto pr-2 md:pr-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60 transition-colors duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="max-h-112.5 overflow-y-auto pr-1 sm:pr-2 md:pr-4 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/25 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-amber-400/60 transition-colors duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
               {filteredStates.length === 0 ? (
                 <div className="col-span-1 md:col-span-2 text-center py-12 text-slate-400 font-medium bg-white/5 rounded-xl border border-white/10">
                   No state portal found matching &quot;{stateSearch}&quot;.
@@ -184,7 +184,7 @@ export default function Resources() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/15 hover:border-amber-400/50 transition-all duration-300 h-fit"
+                    className="group flex items-center justify-between gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/15 hover:border-amber-400/50 transition-all duration-300 h-fit"
                   >
                     <div>
                       <span className="text-xs font-bold text-amber-400 tracking-wider uppercase">
