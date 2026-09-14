@@ -188,8 +188,8 @@ export default function Home() {
           <div className="overflow-hidden w-full scroll-fade">
             <div className="animate-marquee">
               {[...flyers, ...flyers].map((item, index) => (
-                <div key={`${item}-${index}`} className="w-80 h-80 shrink-0 mx-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 flex items-center justify-center overflow-hidden shadow-lg">
-                  <img src={item} alt={`TCC Insight Hour Flyer ${index + 1}`} className="w-full h-full object-cover" />
+                <div key={`${item}-${index}`} className="relative w-80 h-80 shrink-0 mx-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 flex items-center justify-center overflow-hidden shadow-lg">
+                  <Image src={item} alt={`TCC Insight Hour Flyer ${index + 1}`} fill sizes="320px" className="object-cover" />
                 </div>
               ))}
             </div>
@@ -234,7 +234,7 @@ export default function Home() {
                   >
                     {/* Rectangular Image Box */}
                     <div className="w-full h-72 bg-slate-100 overflow-hidden relative">
-                      <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
+                      <Image src={speaker.image} alt={speaker.name} fill sizes="288px" className="object-cover" />
                     </div>
                     {/* Fused Name & Title Box */}
                     <div className="p-5 bg-white flex flex-col justify-between grow text-center">

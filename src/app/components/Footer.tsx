@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-10 text-center md:text-left">
           <div className="max-w-md">
-            <img src="/tcc_logo.png" alt="Tax Clinic Corner Logo" className="h-10 w-auto object-contain mx-auto md:mx-0 mb-4" />
+            <Image src="/tcc_logo.png" alt="Tax Clinic Corner Logo" width={160} height={40} className="h-10 w-auto object-contain mx-auto md:mx-0 mb-4" />
             <p className="text-slate-500 text-sm font-medium leading-relaxed">
               Tax Clinic Corner is a national think-tank dedicated to simplifying Nigerian tax law through authoritative insights and professional discourse.
             </p>

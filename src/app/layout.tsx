@@ -13,9 +13,6 @@ export const metadata: Metadata = {
   title: "Tax Clinic Corner | Fiscal Intelligence & Policy Education",
   description: "A Nigerian digital media and tax policy education platform bridging the knowledge gap between regulatory authorities and the public.",
   keywords: "Tax Clinic Corner, TCC Educational Media, Nigeria Tax Act, tax policy education, fiscal literacy Nigeria",
-  icons: {
-    icon: "/tcc_logo.png",
-  },
 };
 
 export default function RootLayout({

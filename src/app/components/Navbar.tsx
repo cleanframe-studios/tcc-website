@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
@@ -59,7 +60,7 @@ export default function Navbar() {
         
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-2 sm:gap-3">
-          <img src="/tcc_logo.png" alt="Tax Clinic Corner Logo" className="h-8 sm:h-10 w-auto object-contain" />
+          <Image src="/tcc_logo.png" alt="Tax Clinic Corner Logo" width={160} height={40} priority className="h-8 sm:h-10 w-auto object-contain" />
           <span 
             className={`text-sm sm:text-xl font-extrabold tracking-tighter transition-colors duration-300 ${
               !isTransparent ? "text-blue-900" : "text-white drop-shadow-md"
