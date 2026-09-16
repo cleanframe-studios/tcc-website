@@ -52,15 +52,15 @@ export default function ServicesPage() {
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <article key={service.title} className="group flex flex-col md:flex-row gap-5 md:gap-8 p-6 sm:p-8 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:border-blue-200">
+              <article key={service.title} className="group relative flex flex-col gap-5 overflow-hidden rounded-3xl border border-blue-300/25 bg-linear-to-br from-blue-800/95 via-blue-900/95 to-slate-950 p-6 shadow-[0_24px_70px_rgba(2,12,48,0.28)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:border-amber-300/55 hover:shadow-[0_28px_80px_rgba(2,12,48,0.42)] sm:p-8 md:flex-row md:gap-8">
                 <div className="shrink-0">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors duration-300">
-                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-blue-700 group-hover:text-white transition-colors duration-300" />
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-300/35 bg-linear-to-br from-amber-300/25 via-white/10 to-blue-950/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_10px_30px_rgba(2,12,48,0.25)] transition-all duration-500 group-hover:border-amber-200/75 group-hover:from-amber-300/40 group-hover:to-blue-900/50 sm:h-16 sm:w-16">
+                    <Icon className="h-7 w-7 text-amber-300 transition-colors duration-300 group-hover:text-amber-100 sm:h-8 sm:w-8" />
                   </div>
                 </div>
                 <div className="flex flex-col justify-center min-w-0">
-                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 break-words">{service.title}</h2>
-                  <p className="text-slate-600 leading-relaxed break-words">{service.description}</p>
+                  <h2 className="mb-3 break-words text-xl font-bold text-white sm:text-2xl">{service.title}</h2>
+                  <p className="break-words leading-relaxed text-blue-100/90">{service.description}</p>
                 </div>
               </article>
             );
