@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Download, FileText, Search, ExternalLink, Building2 } from 'lucide-react';
+import FaqSection from './FaqSection';
 
 export default function Resources() {
   const [docSearch, setDocSearch] = useState('');
@@ -214,6 +215,8 @@ export default function Resources() {
 
         </div>
       </section>
+
+      <FaqSection />
 
     </main>
   );
