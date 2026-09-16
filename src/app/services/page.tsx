@@ -47,7 +47,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="bg-linear-to-br from-slate-50 via-blue-50/40 to-slate-100 px-4 py-20 sm:px-6 sm:py-24">
+      <section className="bg-linear-to-br from-amber-50 via-white to-amber-100/45 px-4 py-20 sm:px-6 sm:py-24">
         <div className="max-w-5xl mx-auto flex flex-col gap-5">
           {services.map((service) => {
             const Icon = service.icon;
