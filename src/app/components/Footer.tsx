@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -11,10 +10,6 @@ export default function Footer() {
             <p className="text-slate-500 text-sm font-medium leading-relaxed">
               Tax Clinic Corner is a national think-tank dedicated to simplifying Nigerian tax law through authoritative insights and professional discourse.
             </p>
-            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-blue-900/5 border border-blue-900/15 rounded-full text-blue-900 text-xs font-extrabold tracking-wider">
-              <ShieldCheck className="w-4 h-4 text-amber-500" />
-              CAC REGISTRATION: RC - 9820867
-            </div>
           </div>
           <div className="flex flex-wrap justify-center gap-6 text-sm font-semibold text-slate-500 md:pt-10">
             <a href="https://www.linkedin.com/company/taxcliniccorner/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-900 transition-colors">
@@ -37,9 +32,6 @@ export default function Footer() {
 
         <div className="border-t border-slate-200 mt-16 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm font-medium text-slate-500">
           <p>© 2026 Tax Clinic Corner. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <span>Corporate Affairs Commission (RC - 9820867)</span>
-          </div>
         </div>
       </div>
     </footer>
