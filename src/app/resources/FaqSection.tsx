@@ -166,7 +166,9 @@ const faqCategories: FaqCategory[] = [
 ];
 
 export default function FaqSection() {
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const [openQuestion, setOpenQuestion] = useState('');
+  const activeCategory = faqCategories[activeCategoryIndex];
 
   return (
     <section className="border-t border-slate-200 bg-slate-50 px-4 py-20 sm:px-6 sm:py-24">
@@ -182,44 +184,62 @@ export default function FaqSection() {
           </p>
         </div>
 
-        <div className="space-y-10">
-          {faqCategories.map((category) => (
-            <div key={category.label}>
-              <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">{category.label}</span>
-                  <h3 className="mt-1 text-xl font-extrabold text-slate-900">{category.title}</h3>
-                </div>
-                <span className="text-xs font-semibold text-slate-400">{category.items.length} questions</span>
-              </div>
+        <div className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {faqCategories.map((category, index) => {
+            const isActive = activeCategoryIndex === index;
+            return (
+              <button
+                key={category.label}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => {
+                  setActiveCategoryIndex(index);
+                  setOpenQuestion('');
+                }}
+                className={`group min-h-24 rounded-2xl border p-5 text-left transition-all duration-300 ${isActive ? 'border-blue-600 bg-linear-to-br from-blue-900 via-blue-800 to-blue-950 text-white shadow-[0_14px_36px_rgba(30,58,138,0.3)]' : 'border-slate-200 bg-white text-slate-900 shadow-sm hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md'}`}
+              >
+                <span className={`block text-[10px] font-extrabold uppercase tracking-[0.16em] ${isActive ? 'text-amber-300' : 'text-blue-700'}`}>{category.label}</span>
+                <span className="mt-2 block text-sm font-extrabold leading-snug">{category.title}</span>
+                <span className={`mt-2 block text-xs font-semibold ${isActive ? 'text-blue-100' : 'text-slate-400'}`}>{category.items.length} questions</span>
+              </button>
+            );
+          })}
+        </div>
 
-              <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                {category.items.map((item) => {
-                  const questionId = `${category.label}-${item.question}`;
-                  const isOpen = openQuestion === questionId;
-                  return (
-                    <div key={item.question} className="border-b border-slate-200 last:border-b-0">
-                      <button
-                        type="button"
-                        aria-expanded={isOpen}
-                        aria-controls={`${questionId}-answer`}
-                        onClick={() => setOpenQuestion(isOpen ? '' : questionId)}
-                        className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left transition-colors hover:bg-blue-50/60 sm:px-6"
-                      >
-                        <span className="font-bold leading-relaxed text-slate-900">{item.question}</span>
-                        <ChevronDown className={`h-5 w-5 shrink-0 text-blue-700 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-                      </button>
-                      {isOpen && (
-                        <div id={`${questionId}-answer`} className="px-5 pb-6 text-sm leading-7 text-slate-600 sm:px-6">
-                          {item.answer}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+        <div className="rounded-3xl border border-blue-200/70 bg-linear-to-br from-white via-blue-50/70 to-white p-3 shadow-[0_20px_60px_rgba(15,23,42,0.08)] sm:p-5">
+          <div className="mb-4 flex flex-col gap-1 border-b border-blue-100 px-3 pb-5 sm:flex-row sm:items-end sm:justify-between sm:px-4">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">{activeCategory.label}</span>
+              <h3 className="mt-1 text-xl font-extrabold text-slate-900">{activeCategory.title}</h3>
             </div>
-          ))}
+            <span className="text-xs font-semibold text-slate-400">Select a question</span>
+          </div>
+
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white">
+            {activeCategory.items.map((item) => {
+              const questionId = `${activeCategory.label}-${item.question}`;
+              const isOpen = openQuestion === questionId;
+              return (
+                <div key={item.question} className="border-b border-slate-200 last:border-b-0">
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`${questionId}-answer`}
+                    onClick={() => setOpenQuestion(isOpen ? '' : questionId)}
+                    className={`flex w-full items-center justify-between gap-5 px-5 py-5 text-left transition-colors sm:px-6 ${isOpen ? 'bg-blue-50/80' : 'hover:bg-blue-50/50'}`}
+                  >
+                    <span className="font-bold leading-relaxed text-slate-900">{item.question}</span>
+                    <ChevronDown className={`h-5 w-5 shrink-0 text-blue-700 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {isOpen && (
+                    <div id={`${questionId}-answer`} className="border-t border-blue-100 bg-blue-50/35 px-5 pb-7 pt-5 text-sm leading-7 text-slate-600 sm:px-6">
+                      {item.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <div className="mt-16 overflow-hidden rounded-3xl bg-linear-to-br from-blue-950 via-blue-900 to-slate-900 p-8 text-center text-white shadow-xl sm:p-12">
