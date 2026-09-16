@@ -44,13 +44,15 @@ export default function AboutPage() {
             ].map((item, i) => (
               <div 
                 key={i} 
-                className="group p-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-white/20"
+                className="group relative overflow-hidden rounded-3xl border border-blue-300/25 bg-linear-to-br from-blue-800/75 via-blue-900/65 to-slate-950/80 p-10 shadow-[0_24px_70px_rgba(2,12,48,0.4)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-amber-300/55 hover:shadow-[0_28px_80px_rgba(2,12,48,0.58)]"
               >
-                <item.icon className="w-12 h-12 text-blue-300 mb-8 transition-colors duration-500" />
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-300/35 bg-linear-to-br from-amber-300/25 via-white/10 to-blue-950/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_10px_30px_rgba(2,12,48,0.25)] transition-all duration-500 group-hover:border-amber-200/75 group-hover:from-amber-300/40 group-hover:to-blue-900/50">
+                  <item.icon className="h-8 w-8 text-amber-300 transition-colors duration-500 group-hover:text-amber-200" />
+                </div>
+                <h3 className="mb-4 text-2xl font-bold text-white">
                   {item.title}
                 </h3>
-                <p className="text-blue-100 leading-relaxed text-sm">
+                <p className="text-sm leading-relaxed text-blue-100/90">
                   {item.text}
                 </p>
               </div>
