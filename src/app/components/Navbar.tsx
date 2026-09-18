@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,8 +13,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const triggerPoint = window.innerHeight - 80;
-      if (window.scrollY > triggerPoint) {
+      // Changed from window.innerHeight to 50 so the solid background triggers much earlier
+      if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -41,18 +41,57 @@ export default function Navbar() {
 
   const navItems = [
     { name: 'Home', href: '/', onClick: handleHomeClick },
-    { name: 'About', href: '/about' },
-    { name: 'Services', href: '/services' },
-    { name: 'Resources', href: '/resources' },
-    { name: 'Calculator', href: '/calculator' },
-    { name: 'Contact', href: '/contact' },
+    { 
+      name: 'About', 
+      href: '/about',
+      dropdown: [
+        { name: 'Mission', href: '/about' },
+        { name: 'Vision', href: '/about' },
+        { name: 'Socials', href: '/about' },
+      ]
+    },
+    { 
+      name: 'Services', 
+      href: '/services',
+      dropdown: [
+        { name: 'Educational Conferences', href: '/services' },
+        { name: 'Insight Hour & Broadcasts', href: '/services' },
+        { name: 'Tax Clarity Cards', href: '/services' },
+        { name: 'Community Learning Hubs', href: '/services' },
+        { name: 'CSR & Outreach', href: '/services' },
+      ]
+    },
+    { 
+      name: 'Resources', 
+      href: '/resources',
+      dropdown: [
+        { name: 'Statutes & Guidelines', href: '/resources' },
+        { name: 'IRS Website', href: '/resources' },
+        { name: 'Frequently Asked Questions', href: '/resources' },
+      ]
+    },
+    { 
+      name: 'Calculator', 
+      href: '/calculator',
+      dropdown: [
+        { name: 'Individual VAT', href: '/calculator' },
+        { name: 'Company Tax', href: '/calculator' },
+      ]
+    },
+    { 
+      name: 'Contact', 
+      href: '/contact',
+      dropdown: [
+        { name: 'Contact Details', href: '/contact' },
+      ]
+    },
   ];
 
   return (
     <nav 
       className={`fixed top-0 w-full z-50 transition-all duration-300 animate-slide-down ${
         !isTransparent 
-          ? "bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm" 
+          ? "bg-white border-b border-slate-200 shadow-sm" // Changed to solid white to fix the dark bleed-through
           : "bg-white/10 backdrop-blur-xl border-b border-white/20"
       }`}
     >
@@ -71,28 +110,49 @@ export default function Navbar() {
         </Link>
 
         {/* ==========================================
-            DESKTOP NAVIGATION LINKS (Smooth Animated Pills)
+            DESKTOP NAVIGATION LINKS (With Hover Dropdowns)
             ========================================== */}
         <div className="hidden md:flex items-center gap-2 text-sm font-bold">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link 
-                key={item.name}
-                href={item.href}
-                onClick={item.onClick}
-                className={`px-4 py-2 rounded-full transition-all duration-300 transform active:scale-95 ${
-                  isActive 
-                    ? (!isTransparent 
-                        ? "bg-blue-900 text-white shadow-md scale-105 font-extrabold" 
-                        : "bg-amber-400 text-slate-900 shadow-lg scale-105 font-extrabold drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]")
-                    : (!isTransparent 
-                        ? "text-slate-600 hover:text-blue-900 hover:bg-slate-100/60 font-medium" 
-                        : "text-white/90 hover:text-amber-200 hover:bg-white/10 font-medium")
-                }`}
-              >
-                {item.name}
-              </Link>
+              <div key={item.name} className="relative group">
+                <Link 
+                  href={item.href}
+                  onClick={item.onClick}
+                  className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 transform active:scale-95 ${
+                    isActive 
+                      ? (!isTransparent 
+                          ? "bg-blue-900 text-white shadow-md font-extrabold" 
+                          : "bg-amber-400 text-slate-900 shadow-lg font-extrabold drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]")
+                      : (!isTransparent 
+                          ? "text-slate-600 hover:text-blue-900 hover:bg-slate-100/60 font-medium" 
+                          : "text-white/90 hover:text-amber-200 hover:bg-white/10 font-medium")
+                  }`}
+                >
+                  {item.name}
+                  {item.dropdown && (
+                    <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-300 group-hover:rotate-180 ${isActive ? 'opacity-100' : 'opacity-70'}`} />
+                  )}
+                </Link>
+
+                {/* Desktop Dropdown Menu */}
+                {item.dropdown && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 min-w-[220px]">
+                    <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 flex flex-col gap-1">
+                      {item.dropdown.map((drop) => (
+                        <Link 
+                          key={drop.name} 
+                          href={drop.href} 
+                          className="px-4 py-2.5 hover:bg-blue-50 text-slate-600 hover:text-blue-900 text-sm font-semibold rounded-xl transition-colors"
+                        >
+                          {drop.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
@@ -111,26 +171,42 @@ export default function Navbar() {
       </div>
 
       {/* ==========================================
-          MOBILE DROPDOWN NAVIGATION LINKS (Distinct Active Cards)
+          MOBILE DROPDOWN NAVIGATION LINKS
           ========================================== */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl py-6 px-6 flex flex-col gap-3 text-left animate-fade-in-up">
+        <div className="md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl py-6 px-6 flex flex-col gap-3 text-left animate-fade-in-up max-h-[80vh] overflow-y-auto">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link 
-                key={item.name}
-                href={item.href}
-                onClick={item.onClick}
-                className={`px-4 py-3 rounded-xl text-base transition-all duration-200 flex items-center justify-between ${
-                  isActive 
-                    ? "bg-blue-50 text-blue-900 font-extrabold border-l-4 border-blue-900 shadow-xs" 
-                    : "text-slate-700 font-medium hover:bg-slate-50 hover:text-blue-900"
-                }`}
-              >
-                <span>{item.name}</span>
-                {isActive && <span className="w-2 h-2 rounded-full bg-blue-900"></span>}
-              </Link>
+              <div key={item.name} className="flex flex-col">
+                <Link 
+                  href={item.href}
+                  onClick={item.onClick}
+                  className={`px-4 py-3 rounded-xl text-base transition-all duration-200 flex items-center justify-between ${
+                    isActive 
+                      ? "bg-blue-50 text-blue-900 font-extrabold border-l-4 border-blue-900 shadow-sm" 
+                      : "text-slate-700 font-bold hover:bg-slate-50 hover:text-blue-900"
+                  }`}
+                >
+                  <span>{item.name}</span>
+                  {isActive && <span className="w-2 h-2 rounded-full bg-blue-900"></span>}
+                </Link>
+                
+                {/* Mobile Sub-menu */}
+                {item.dropdown && (
+                  <div className="flex flex-col pl-6 mt-1 mb-2 border-l-2 border-slate-100 ml-4 gap-1">
+                    {item.dropdown.map((drop) => (
+                      <Link 
+                        key={drop.name} 
+                        href={drop.href} 
+                        className="py-2 text-sm font-medium text-slate-500 hover:text-blue-900"
+                      >
+                        {drop.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
