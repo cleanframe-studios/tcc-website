@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,52 +38,39 @@ export default function Navbar() {
     }
   };
 
+  // Dropdown items are now just arrays of strings (informational text)
   const navItems = [
     { name: 'Home', href: '/', onClick: handleHomeClick },
     { 
       name: 'About', 
       href: '/about',
-      dropdown: [
-        { name: 'Mission', href: '/about' },
-        { name: 'Vision', href: '/about' },
-        { name: 'Socials', href: '/about' },
-      ]
+      dropdown: ['Mission', 'Vision', 'Socials']
     },
     { 
       name: 'Services', 
       href: '/services',
       dropdown: [
-        { name: 'Educational Conferences', href: '/services' },
-        { name: 'Insight Hour & Broadcasts', href: '/services' },
-        { name: 'Tax Clarity Cards', href: '/services' },
-        { name: 'Community Learning Hubs', href: '/services' },
-        { name: 'CSR & Outreach', href: '/services' },
+        'Educational Conferences', 
+        'Insight Hour & Broadcasts', 
+        'Tax Clarity Cards', 
+        'Community Learning Hubs', 
+        'CSR & Outreach'
       ]
     },
     { 
       name: 'Resources', 
       href: '/resources',
-      dropdown: [
-        { name: 'Statutes & Guidelines', href: '/resources' },
-        { name: 'IRS Website', href: '/resources' },
-        { name: 'Frequently Asked Questions', href: '/resources' },
-      ]
+      dropdown: ['Statutes & Guidelines', 'IRS Website', 'Frequently Asked Questions']
     },
     { 
       name: 'Calculator', 
       href: '/calculator',
-      dropdown: [
-        { name: 'Individual / PAYE', href: '/calculator#individual' },
-        { name: 'VAT', href: '/calculator#vat' },
-        { name: 'Company Tax', href: '/calculator#company' },
-      ]
+      dropdown: ['Individual / PAYE', 'VAT', 'Company Tax']
     },
     { 
       name: 'Contact', 
       href: '/contact',
-      dropdown: [
-        { name: 'Contact Details', href: '/contact' },
-      ]
+      dropdown: ['Contact Details']
     },
   ];
 
@@ -131,23 +118,22 @@ export default function Navbar() {
                   }`}
                 >
                   {item.name}
-                  {item.dropdown && (
-                    <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-300 group-hover:rotate-180 ${isActive ? 'opacity-100' : 'opacity-70'}`} />
-                  )}
                 </Link>
 
-                {/* Desktop Dropdown Menu (Liquid Glass, Sharp Edges, Morph Animation) */}
+                {/* Desktop Dropdown Menu (True Liquid Glass, Non-Clickable Text) */}
                 {item.dropdown && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform origin-top -translate-y-2 scale-y-95 group-hover:translate-y-0 group-hover:scale-y-100 min-w-[220px]">
-                    <div className="bg-white/70 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-white/80 flex flex-col rounded-none overflow-hidden">
-                      {item.dropdown.map((drop) => (
-                        <Link 
-                          key={drop.name} 
-                          href={drop.href} 
-                          className="px-5 py-3.5 hover:bg-white/90 hover:backdrop-blur-3xl text-slate-600 hover:text-blue-900 text-sm font-semibold transition-all border-b border-slate-200/40 last:border-0 hover:pl-6"
+                    <div className="relative bg-white/10 backdrop-blur-3xl saturate-150 shadow-[0_12px_40px_rgba(15,23,42,0.15)] border border-white/60 flex flex-col rounded-none overflow-hidden">
+                      {/* Inner Glass Shine Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none z-0" />
+                      
+                      {item.dropdown.map((dropText, idx) => (
+                        <div 
+                          key={idx} 
+                          className="relative z-10 px-5 py-3.5 text-slate-700 text-sm font-bold tracking-wide border-b border-slate-400/20 last:border-0 cursor-default"
                         >
-                          {drop.name}
-                        </Link>
+                          {dropText}
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -192,17 +178,16 @@ export default function Navbar() {
                   {isActive && <span className="w-2 h-2 rounded-full bg-blue-900"></span>}
                 </Link>
                 
-                {/* Mobile Sub-menu */}
+                {/* Mobile Sub-menu (Informational Text) */}
                 {item.dropdown && (
-                  <div className="flex flex-col pl-6 mt-1 mb-2 border-l-2 border-slate-100 ml-4 gap-1">
-                    {item.dropdown.map((drop) => (
-                      <Link 
-                        key={drop.name} 
-                        href={drop.href} 
-                        className="py-2 text-sm font-medium text-slate-500 hover:text-blue-900"
+                  <div className="flex flex-col pl-6 mt-1 mb-2 border-l-2 border-slate-200 ml-4 gap-1">
+                    {item.dropdown.map((dropText, idx) => (
+                      <span 
+                        key={idx} 
+                        className="py-2 text-sm font-medium text-slate-500 cursor-default"
                       >
-                        {drop.name}
-                      </Link>
+                        {dropText}
+                      </span>
                     ))}
                   </div>
                 )}
