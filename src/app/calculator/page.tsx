@@ -152,6 +152,19 @@ export default function Calculator() {
   const [vat, setVat] = useState<{ amount: NumericInput; inputVat: NumericInput; pricing: string; supply: string }>({ amount: 1000000, inputVat: 0, pricing: 'exclusive', supply: 'taxable' });
   const [company, setCompany] = useState<{ turnover: NumericInput; profit: NumericInput; fixedAssets: NumericInput }>({ turnover: 10000000, profit: 3000000, fixedAssets: 50000000 });
 
+  // NEW ADDITION: Listens for URL hashes like #vat to switch tabs automatically
+  useEffect(() => {
+    const syncModeFromHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'individual' || hash === 'vat' || hash === 'company') {
+        setMode(hash as CalculatorMode);
+      }
+    };
+    syncModeFromHash(); // Check on mount
+    window.addEventListener('hashchange', syncModeFromHash);
+    return () => window.removeEventListener('hashchange', syncModeFromHash);
+  }, []);
+
   const updateIndividual = (field: keyof typeof individual, value: NumericInput) => setIndividual((current) => ({ ...current, [field]: value }));
   const monthlyEmploymentIncome = toNumber(individual.basicSalary) + toNumber(individual.housingAllowance) + toNumber(individual.transportAllowance) + toNumber(individual.otherAllowances) + toNumber(individual.bonus) + toNumber(individual.commission) + toNumber(individual.otherEmploymentIncome);
   const annualEmploymentIncome = monthlyEmploymentIncome * 12;

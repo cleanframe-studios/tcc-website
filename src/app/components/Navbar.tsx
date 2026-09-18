@@ -13,7 +13,6 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Changed from window.innerHeight to 50 so the solid background triggers much earlier
       if (window.scrollY > 50) {
         setIsScrolled(true);
       } else {
@@ -74,8 +73,9 @@ export default function Navbar() {
       name: 'Calculator', 
       href: '/calculator',
       dropdown: [
-        { name: 'Individual VAT', href: '/calculator' },
-        { name: 'Company Tax', href: '/calculator' },
+        { name: 'Individual / PAYE', href: '/calculator#individual' },
+        { name: 'VAT', href: '/calculator#vat' },
+        { name: 'Company Tax', href: '/calculator#company' },
       ]
     },
     { 
@@ -91,7 +91,7 @@ export default function Navbar() {
     <nav 
       className={`fixed top-0 w-full z-50 transition-all duration-300 animate-slide-down ${
         !isTransparent 
-          ? "bg-white border-b border-slate-200 shadow-sm" // Changed to solid white to fix the dark bleed-through
+          ? "bg-white border-b border-slate-200 shadow-sm" 
           : "bg-white/10 backdrop-blur-xl border-b border-white/20"
       }`}
     >
@@ -110,7 +110,7 @@ export default function Navbar() {
         </Link>
 
         {/* ==========================================
-            DESKTOP NAVIGATION LINKS (With Hover Dropdowns)
+            DESKTOP NAVIGATION LINKS 
             ========================================== */}
         <div className="hidden md:flex items-center gap-2 text-sm font-bold">
           {navItems.map((item) => {
@@ -136,15 +136,15 @@ export default function Navbar() {
                   )}
                 </Link>
 
-                {/* Desktop Dropdown Menu */}
+                {/* Desktop Dropdown Menu (Liquid Glass, Sharp Edges, Morph Animation) */}
                 {item.dropdown && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 min-w-[220px]">
-                    <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 flex flex-col gap-1">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform origin-top -translate-y-2 scale-y-95 group-hover:translate-y-0 group-hover:scale-y-100 min-w-[220px]">
+                    <div className="bg-white/70 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-white/80 flex flex-col rounded-none overflow-hidden">
                       {item.dropdown.map((drop) => (
                         <Link 
                           key={drop.name} 
                           href={drop.href} 
-                          className="px-4 py-2.5 hover:bg-blue-50 text-slate-600 hover:text-blue-900 text-sm font-semibold rounded-xl transition-colors"
+                          className="px-5 py-3.5 hover:bg-white/90 hover:backdrop-blur-3xl text-slate-600 hover:text-blue-900 text-sm font-semibold transition-all border-b border-slate-200/40 last:border-0 hover:pl-6"
                         >
                           {drop.name}
                         </Link>
