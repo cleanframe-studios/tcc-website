@@ -34,11 +34,25 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-slate-50 relative overflow-hidden">
       
-      {/* AMBIENT LIQUID BACKGROUND (The secret to premium glassmorphism) */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-blue-300/20 blur-[120px]" />
-        <div className="absolute top-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-amber-300/10 blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] rounded-full bg-blue-400/15 blur-[150px]" />
+      {/* AMBIENT LIQUID BACKGROUND WITH DEBACLED ANIMATION */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden bg-slate-50">
+        <style dangerouslySetInnerHTML={{__html: `
+          @keyframes move-blob-1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+          }
+          @keyframes move-blob-2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-50px, 30px) scale(0.95); }
+            66% { transform: translate(40px, -20px) scale(1.05); }
+          }
+          .animate-blob-1 { animation: move-blob-1 12s infinite ease-in-out; }
+          .animate-blob-2 { animation: move-blob-2 15s infinite ease-in-out; }
+        `}} />
+        <div className="absolute top-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-blue-300/30 to-blue-600/10 blur-[100px] animate-blob-1" />
+        <div className="absolute top-[20%] right-[-10%] w-[700px] h-[700px] rounded-full bg-gradient-to-bl from-amber-300/20 to-orange-400/10 blur-[120px] animate-blob-2" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[800px] h-[800px] rounded-full bg-gradient-to-tr from-blue-400/20 to-cyan-300/10 blur-[130px] animate-blob-1" style={{ animationDelay: '-5s' }} />
       </div>
 
       {/* HEADER SECTION */}

@@ -69,19 +69,6 @@ body {
   to { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes liquidReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px) scaleY(0.92);
-    filter: blur(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scaleY(1);
-    filter: blur(0);
-  }
-}
-
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -93,93 +80,6 @@ body {
 
 .animate-fade-in-up {
   animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.desktop-dropdown {
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 0.8rem);
-  transform: translateX(-50%);
-  width: min(21rem, 30vw);
-  min-width: 16rem;
-  z-index: 60;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform-origin: top center;
-  transition: opacity 260ms ease, transform 260ms cubic-bezier(0.16, 1, 0.3, 1), visibility 260ms ease;
-}
-
-.group:hover .desktop-dropdown,
-.group:focus-within .desktop-dropdown {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  animation: liquidReveal 420ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.desktop-dropdown__panel {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 22px 56px rgba(15, 23, 42, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(22px) saturate(1.7);
-  -webkit-backdrop-filter: blur(22px) saturate(1.7);
-}
-
-.desktop-dropdown__panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02) 40%, rgba(255, 255, 255, 0.08));
-  pointer-events: none;
-}
-
-.desktop-dropdown__item {
-  position: relative;
-  z-index: 1;
-  padding: 0.8rem 1rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: none;
-  cursor: default;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.22);
-}
-
-.desktop-dropdown__item:last-child {
-  border-bottom: none;
-}
-
-.desktop-dropdown--transparent .desktop-dropdown__panel {
-  background: rgba(15, 23, 42, 0.08);
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 22px 60px rgba(2, 6, 23, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.desktop-dropdown--transparent .desktop-dropdown__item {
-  color: rgba(255, 255, 255, 0.96);
-  text-shadow: 0 2px 14px rgba(15, 23, 42, 0.35);
-}
-
-.desktop-dropdown--solid .desktop-dropdown__panel {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(15, 23, 42, 0.08);
-  box-shadow: 0 28px 56px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.36);
-}
-
-.desktop-dropdown--solid .desktop-dropdown__item {
-  color: rgba(15, 23, 42, 0.84);
-}
-
-.desktop-dropdown--solid .desktop-dropdown__item:not(:last-child) {
-  border-bottom-color: rgba(15, 23, 42, 0.08);
-}
-
-@media (max-width: 767px) {
-  .desktop-dropdown {
-    display: none !important;
-  }
 }
 
 .animation-delay-200 {

@@ -13,7 +13,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
 
     handleScroll();
@@ -34,100 +38,105 @@ export default function Navbar() {
     }
   };
 
+  // Dropdown items are now just arrays of strings (informational text)
   const navItems = [
     { name: 'Home', href: '/', onClick: handleHomeClick },
-    {
-      name: 'About',
+    { 
+      name: 'About', 
       href: '/about',
-      dropdown: ['Mission', 'Vision', 'Socials'],
+      dropdown: ['Mission', 'Vision', 'Socials']
     },
-    {
-      name: 'Services',
+    { 
+      name: 'Services', 
       href: '/services',
       dropdown: [
-        'Educational Conferences',
-        'Insight Hour & Broadcasts',
-        'Tax Clarity Cards',
-        'Community Learning Hubs',
-        'CSR & Outreach',
-      ],
+        'Educational Conferences', 
+        'Insight Hour & Broadcasts', 
+        'Tax Clarity Cards', 
+        'Community Learning Hubs', 
+        'CSR & Outreach'
+      ]
     },
-    {
-      name: 'Resources',
+    { 
+      name: 'Resources', 
       href: '/resources',
-      dropdown: ['Statutes & Guidelines', 'IRS Website', 'Frequently Asked Questions'],
+      dropdown: ['Statutes & Guidelines', 'IRS Website', 'Frequently Asked Questions']
     },
-    {
-      name: 'Calculator',
+    { 
+      name: 'Calculator', 
       href: '/calculator',
-      dropdown: ['Individual / PAYE', 'VAT', 'Company Tax'],
+      dropdown: ['Individual / PAYE', 'VAT', 'Company Tax']
     },
-    {
-      name: 'Contact',
+    { 
+      name: 'Contact', 
       href: '/contact',
-      dropdown: ['Contact Details'],
+      dropdown: ['Contact Details']
     },
   ];
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isTransparent
-          ? 'border-b border-white/15 bg-white/5 backdrop-blur-2xl'
-          : 'border-b border-slate-200/80 bg-white/70 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl'
+    <nav 
+      className={`fixed top-0 w-full z-50 transition-all duration-300 animate-slide-down ${
+        !isTransparent 
+          ? "bg-white border-b border-slate-200 shadow-sm" 
+          : "bg-white/10 backdrop-blur-xl border-b border-white/20"
       }`}
     >
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2 sm:gap-3" aria-label="Tax Clinic Corner home">
-          <Image
-            src="/tcc_logo.png"
-            alt="Tax Clinic Corner Logo"
-            width={160}
-            height={40}
-            priority
-            className="h-8 w-auto object-contain sm:h-10"
-          />
-          <span
-            className={`text-sm font-extrabold tracking-tighter transition-colors duration-300 sm:text-xl ${
-              isTransparent ? 'text-white drop-shadow-[0_8px_25px_rgba(15,23,42,0.55)]' : 'text-slate-900'
+      <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        
+        {/* Logo Section */}
+        <Link href="/" className="flex items-center gap-2 sm:gap-3">
+          <Image src="/tcc_logo.png" alt="Tax Clinic Corner Logo" width={160} height={40} priority className="h-8 sm:h-10 w-auto object-contain" />
+          <span 
+            className={`text-sm sm:text-xl font-extrabold tracking-tighter transition-colors duration-300 ${
+              !isTransparent ? "text-blue-900" : "text-white drop-shadow-md"
             }`}
           >
             TAX CLINIC CORNER.
           </span>
         </Link>
 
-        <div className="hidden items-center gap-1.5 text-sm font-medium md:flex">
+        {/* ==========================================
+            DESKTOP NAVIGATION LINKS 
+            ========================================== */}
+        <div className="hidden md:flex items-center gap-2 text-sm font-bold">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
-
             return (
-              <div key={item.name} className="group relative">
-                <Link
+              <div key={item.name} className="relative group">
+                <Link 
                   href={item.href}
                   onClick={item.onClick}
-                  className={`relative flex items-center px-4 py-2.5 transition-all duration-300 ease-out ${
-                    isActive
-                      ? isTransparent
-                        ? 'rounded-none bg-amber-300/90 text-slate-950 shadow-[0_10px_30px_rgba(251,191,36,0.35)]'
-                        : 'rounded-none bg-slate-900 text-white shadow-[0_10px_30px_rgba(15,23,42,0.15)]'
-                      : isTransparent
-                        ? 'text-white/90 hover:bg-white/5 hover:text-white'
-                        : 'text-slate-700 hover:bg-slate-100/80 hover:text-slate-900'
+                  className={`flex items-center px-4 py-2 rounded-full transition-all duration-300 transform active:scale-95 ${
+                    isActive 
+                      ? (!isTransparent 
+                          ? "bg-blue-900 text-white shadow-md font-extrabold" 
+                          : "bg-amber-400 text-slate-900 shadow-lg font-extrabold drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]")
+                      : (!isTransparent 
+                          ? "text-slate-600 hover:text-blue-900 hover:bg-slate-100/60 font-medium" 
+                          : "text-white/90 hover:text-amber-200 hover:bg-white/10 font-medium")
                   }`}
                 >
                   {item.name}
                 </Link>
 
+                {/* Desktop Dropdown Menu (True Liquid Glass, Non-Clickable Text) */}
                 {item.dropdown && (
-                  <div
-                    className={`desktop-dropdown ${isTransparent ? 'desktop-dropdown--transparent' : 'desktop-dropdown--solid'}`}
-                    aria-hidden="true"
-                  >
-                    <div className="desktop-dropdown__panel">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform origin-top -translate-y-2 scale-y-95 group-hover:translate-y-0 group-hover:scale-y-100 min-w-[220px]">
+                    <div
+                      className="relative flex flex-col overflow-hidden rounded-2xl border border-white/40 shadow-[0_20px_55px_rgba(15,23,42,0.22)]"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08))',
+                        backdropFilter: 'blur(22px) saturate(180%)',
+                        WebkitBackdropFilter: 'blur(22px) saturate(180%)',
+                      }}
+                    >
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.7),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.18))]" />
+
                       {item.dropdown.map((dropText, idx) => (
                         <div
-                          key={`${item.name}-${dropText}-${idx}`}
-                          className={`desktop-dropdown__item ${isTransparent ? 'desktop-dropdown__item--transparent' : 'desktop-dropdown__item--solid'}`}
+                          key={idx}
+                          className="relative z-10 px-5 py-3.5 text-slate-700/90 text-sm font-bold tracking-wide border-b border-slate-400/20 last:border-0 cursor-default"
                         >
                           {dropText}
                         </div>
@@ -140,39 +149,57 @@ export default function Navbar() {
           })}
         </div>
 
-        <button
+        {/* Mobile Hamburger Button */}
+        <button 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`rounded-lg p-2 transition-colors md:hidden ${
-            isTransparent ? 'text-white' : 'text-slate-800'
+          className={`md:hidden p-2 rounded-lg transition-colors ${
+            !isTransparent ? "text-slate-800" : "text-white"
           }`}
           aria-label="Toggle Menu"
         >
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
+        
       </div>
 
+      {/* ==========================================
+          MOBILE DROPDOWN NAVIGATION LINKS
+          ========================================== */}
       {mobileMenuOpen && (
-        <div className="absolute left-0 top-20 w-full border-b border-slate-200 bg-white/95 px-6 py-5 shadow-[0_20px_40px_rgba(15,23,42,0.12)] backdrop-blur-xl md:hidden">
-          <div className="flex flex-col gap-2">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-
-              return (
-                <Link
-                  key={item.name}
+        <div className="md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl py-6 px-6 flex flex-col gap-3 text-left animate-fade-in-up max-h-[80vh] overflow-y-auto">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <div key={item.name} className="flex flex-col">
+                <Link 
                   href={item.href}
                   onClick={item.onClick}
-                  className={`px-4 py-3 text-base font-bold transition-all duration-200 ${
-                    isActive
-                      ? 'border-l-4 border-blue-900 bg-blue-50 text-blue-900'
-                      : 'text-slate-700 hover:bg-slate-50 hover:text-blue-900'
+                  className={`px-4 py-3 rounded-xl text-base transition-all duration-200 flex items-center justify-between ${
+                    isActive 
+                      ? "bg-blue-50 text-blue-900 font-extrabold border-l-4 border-blue-900 shadow-sm" 
+                      : "text-slate-700 font-bold hover:bg-slate-50 hover:text-blue-900"
                   }`}
                 >
-                  {item.name}
+                  <span>{item.name}</span>
+                  {isActive && <span className="w-2 h-2 rounded-full bg-blue-900"></span>}
                 </Link>
-              );
-            })}
-          </div>
+                
+                {/* Mobile Sub-menu (Informational Text) */}
+                {item.dropdown && (
+                  <div className="flex flex-col pl-6 mt-1 mb-2 border-l-2 border-slate-200 ml-4 gap-1">
+                    {item.dropdown.map((dropText, idx) => (
+                      <span 
+                        key={idx} 
+                        className="py-2 text-sm font-medium text-slate-500 cursor-default"
+                      >
+                        {dropText}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </nav>
