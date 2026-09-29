@@ -114,7 +114,7 @@ export default function Navbar() {
                           : "bg-amber-400 text-slate-900 shadow-lg font-extrabold drop-shadow-[0_0_12px_rgba(251,191,36,0.8)]")
                       : (!isTransparent 
                           ? "text-slate-600 hover:text-blue-900 hover:bg-slate-100/60 font-medium" 
-                          : "text-white/90 hover:text-amber-200 hover:bg-white/10 font-medium")
+                          : "text-white hover:text-white hover:bg-white/10 font-medium")
                   }`}
                 >
                   {item.name}
@@ -122,25 +122,21 @@ export default function Navbar() {
 
                 {/* Desktop Dropdown Menu (True Liquid Glass, Non-Clickable Text) */}
                 {item.dropdown && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform origin-top -translate-y-2 scale-y-95 group-hover:translate-y-0 group-hover:scale-y-100 min-w-[220px]">
-                    <div
-                      className="relative flex flex-col overflow-hidden rounded-2xl border border-white/40 shadow-[0_20px_55px_rgba(15,23,42,0.22)]"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08))',
-                        backdropFilter: 'blur(22px) saturate(180%)',
-                        WebkitBackdropFilter: 'blur(22px) saturate(180%)',
-                      }}
-                    >
-                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.7),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.18))]" />
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform origin-top -translate-y-2 scale-y-95 group-hover:translate-y-0 group-hover:scale-y-100 min-w-[240px]">
+                    <div className="relative">
+                      <div className="absolute inset-0 rounded-[22px] border border-white/35 bg-white/10 backdrop-blur-2xl saturate-150 shadow-[0_24px_60px_rgba(15,23,42,0.22)]" />
+                      <div className="absolute inset-[1px] rounded-[21px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.72),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] blur-[2px]" />
 
-                      {item.dropdown.map((dropText, idx) => (
-                        <div
-                          key={idx}
-                          className="relative z-10 px-5 py-3.5 text-slate-700/90 text-sm font-bold tracking-wide border-b border-slate-400/20 last:border-0 cursor-default"
-                        >
-                          {dropText}
-                        </div>
-                      ))}
+                      <div className="relative z-10 flex flex-col overflow-hidden rounded-[22px] border border-white/35 shadow-[0_24px_60px_rgba(15,23,42,0.22)]">
+                        {item.dropdown.map((dropText, idx) => (
+                          <div
+                            key={idx}
+                            className="relative z-10 px-5 py-3.5 text-sm font-bold tracking-wide text-slate-700/90 border-b border-slate-400/20 last:border-0 cursor-default"
+                          >
+                            {dropText}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
