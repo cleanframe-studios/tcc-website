@@ -124,11 +124,9 @@ export default function Navbar() {
                 {item.dropdown && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out -translate-y-2 group-hover:translate-y-0 min-w-[240px] z-50">
                     <div
-                      className="relative isolate overflow-hidden rounded-[22px] border border-white/45 shadow-[0_24px_60px_rgba(15,23,42,0.24),inset_0_1px_0_rgba(255,255,255,0.8)] bg-white/10 backdrop-blur-2xl saturate-150"
+                      className="relative isolate overflow-hidden rounded-[22px] border border-white/45 shadow-[0_24px_60px_rgba(15,23,42,0.24),inset_0_1px_0_rgba(255,255,255,0.8)] bg-white/20 saturate-150"
                       style={{
                         background: 'linear-gradient(145deg, rgba(255,255,255,0.28), rgba(255,255,255,0.12) 48%, rgba(220,235,255,0.16))',
-                        backdropFilter: 'blur(24px) saturate(190%)',
-                        WebkitBackdropFilter: 'blur(24px) saturate(190%)',
                       }}
                     >
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.82),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.18),transparent_48%,rgba(255,255,255,0.08))]" />
