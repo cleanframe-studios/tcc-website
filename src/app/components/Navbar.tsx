@@ -79,7 +79,7 @@ export default function Navbar() {
       className={`fixed top-0 w-full z-50 transition-all duration-300 animate-slide-down ${
         !isTransparent 
           ? "bg-white border-b border-slate-200 shadow-sm" 
-          : "bg-white/10 backdrop-blur-xl border-b border-white/20"
+          : "bg-white/10 border-b border-white/20"
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -122,12 +122,18 @@ export default function Navbar() {
 
                 {/* Desktop Dropdown Menu (True Liquid Glass, Non-Clickable Text) */}
                 {item.dropdown && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform origin-top -translate-y-2 scale-y-95 group-hover:translate-y-0 group-hover:scale-y-100 min-w-[240px]">
-                    <div className="relative">
-                      <div className="absolute inset-0 rounded-[22px] border border-white/35 bg-white/10 backdrop-blur-2xl saturate-150 shadow-[0_24px_60px_rgba(15,23,42,0.22)]" />
-                      <div className="absolute inset-[1px] rounded-[21px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.72),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))] blur-[2px]" />
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform origin-top -translate-y-2 scale-y-95 group-hover:translate-y-0 group-hover:scale-y-100 min-w-[240px] z-50">
+                    <div
+                      className="relative isolate overflow-hidden rounded-[22px] border border-white/35 shadow-[0_24px_60px_rgba(15,23,42,0.22)] bg-white/10 backdrop-blur-2xl saturate-150"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06))',
+                        backdropFilter: 'blur(18px) saturate(180%)',
+                        WebkitBackdropFilter: 'blur(18px) saturate(180%)',
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.72),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.04))]" />
 
-                      <div className="relative z-10 flex flex-col overflow-hidden rounded-[22px] border border-white/35 shadow-[0_24px_60px_rgba(15,23,42,0.22)]">
+                      <div className="relative z-10 flex flex-col">
                         {item.dropdown.map((dropText, idx) => (
                           <div
                             key={idx}
